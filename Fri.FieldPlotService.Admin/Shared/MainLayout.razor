@@ -1,0 +1,91 @@
+﻿@inherits LayoutComponentBase
+@inject IStringLocalizer<Resources.Strings> localizer
+@inject NavigationManager navigation
+
+
+<MudThemeProvider Theme="@theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Color="Color.Primary">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Class="ml-2" Typo="Typo.h2">@localizer["AppName"]</MudText>
+        <MudSpacer />
+        <AuthorizeView>
+            <Authorized>
+                <MudText>@($"{localizer["General_Greeting"]}, {context.User.Identity?.Name}")</MudText>
+            </Authorized>
+            <NotAuthorized>
+                <a href="authentication/login">@localizer["General_SignIn"]</a>
+            </NotAuthorized>
+        </AuthorizeView>
+        <MudImage Class="ml-3" Src="/ontario-icon.png" Height="40" />
+    </MudAppBar>
+    <MudDrawer Anchor="Anchor.Left" ClipMode="DrawerClipMode.Always" Elevation="2" Variant="DrawerVariant.Temporary" @bind-Open="@drawerOpen">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent Class="ma-4">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+
+    bool drawerOpen = false;
+    MudTheme theme = new()
+    {
+        Palette = new Palette()
+        {
+            Primary = "#558FBE",
+            PrimaryLighten = "#9BC0D9",
+                PrimaryDarken = "#3F6CA3"
+        },
+        Typography = new Typography()
+        {
+            Default = new Default()
+            {
+                FontFamily = new[] { "Verdana", "Helvetica", "Arial", "sans-serif" },
+                FontSize = "0.75rem"
+            },
+            H1 = new H1()
+            {
+                FontSize = "1.5rem",
+            },
+            H2 = new H2()
+            {
+                FontSize = "1.25rem",
+            },
+            H3 = new H3()
+            {
+                FontSize = "1.25rem",
+            },
+            H4 = new H4()
+            {
+                FontSize = "1.20rem",
+            },
+            H5 = new H5()
+            {
+                FontSize = "1.10rem",
+            },
+            H6 = new H6()
+            {
+                FontSize = "1.0rem",
+            },
+            Body1 = new Body1()
+            {
+                FontSize = "0.75rem",
+            },
+            Body2 = new Body2()
+            {
+                FontSize = "0.75rem",
+            },
+        }
+    };
+
+    void DrawerToggle()
+    {
+        drawerOpen = !drawerOpen;
+    }
+
+}

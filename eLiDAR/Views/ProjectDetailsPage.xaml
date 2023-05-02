@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="eLiDAR.Views.ProjectDetailsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:eLiDAR.Views"
+    Title="Project Details"
+    BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.ForegroundColor="{StaticResource cerulean}"
+    Shell.TitleColor="{StaticResource cerulean}">
+    <StackLayout Padding="20" Spacing="12">
+        <local:ProjectView />
+         <Button
+            Style="{StaticResource FormButtonStyle }"
+            Command="{Binding DeleteProjectCommand}"
+             IsEnabled="{Binding  AllowProjectDeletion}"
+            Text="Delete"
+          />
+    </StackLayout>
+</ContentPage>

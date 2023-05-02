@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject IStringLocalizer<Resources.Strings> localizer
+
+<AuthorizeView>
+    <Authorized>
+        Hello, @context.User.Identity?.Name
+    </Authorized>
+    <NotAuthorized>
+        <MudLink Href="authentication/login">@localizer["General_Login"]</MudLink>
+    </NotAuthorized>
+</AuthorizeView>

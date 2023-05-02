@@ -1,0 +1,176 @@
+﻿@page "/plots/import"
+@inherits BasePage
+
+<BusyIndicator Model="@this" />
+<MudBreadcrumbs Items="@Breadcrumbs" />
+
+<PageTitle>@Localizer["Pages_Plots_ImportPlots_Title"]</PageTitle>
+<MudText Class="mb-3" Typo="Typo.h1">@Localizer["Pages_Plots_ImportPlots_Title"]</MudText>
+
+@if (IsInitialized)
+{
+    <MudPaper Class="pa-3">
+        <EditForm Model="model" OnValidSubmit="SaveAsync">
+            <DataAnnotationsValidator />
+            <MudStack Row="false">
+                <MudSelect Class="form-field" Margin="Margin.Dense" Variant="Variant.Outlined" Clearable="true" T="ProjectModel" @bind-Value="model.SelectedProject" Label="@Localizer["General_ProjectName"]">
+                    @if (model.Projects != null)
+                    {
+                        foreach (var project in model.Projects)
+                        {
+                            <MudSelectItem T="ProjectModel" Value="@project">@($"{project.Info.Name} [{GetVendorName(project.VendorId)}]")</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+                <MudDataGrid T="ImportPlotData" Items="@model.Plots" ReadOnly="false" EditMode="DataGridEditMode.Cell"
+                         Bordered="true" Dense="true" EditTrigger="DataGridEditTrigger.OnRowClick"  >
+                    <Columns>
+                        <PropertyColumn T="ImportPlotData" TProperty="string" Property="@(x => x.PlotName)" Title="Plot Name" IsEditable="true" />
+                        <PropertyColumn T="ImportPlotData" TProperty="int?" Property="@(x => x.MeasureYear)" Title="Measure Year" IsEditable="true" />
+                        <PropertyColumn T="ImportPlotData" TProperty="string" Property="@(x => x.PlotTypeCode)" Title="Plot Type Code" IsEditable="true" />
+                        <TemplateColumn T="ImportPlotData" Title="Actions" IsEditable="false" Context="plotContext">
+                            <EditTemplate>
+                                <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => { model.Plots.Remove(plotContext.Item); StateHasChanged(); } )" />
+                            </EditTemplate>
+                        </TemplateColumn>
+                    </Columns>
+                </MudDataGrid>
+                <MudStack AlignItems="AlignItems.Start">
+                    <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Add" OnClick="@(() => { model.Plots.Add(new ImportPlotData()); StateHasChanged(); })" />
+                </MudStack>
+            </MudStack>
+            <MudStack Row="true" AlignItems="AlignItems.Start" Class="ma-6">
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined">@Localizer["General_Save"]</MudButton>
+            </MudStack>
+        </EditForm>
+    </MudPaper>
+}
+
+
+@code {
+
+    /// <summary>
+    /// Model used for the page.
+    /// </summary>
+    ImportFormModel model = new();
+
+    /// <summary>
+    /// Initialize the page.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Breadcrumbs = new List<BreadcrumbItem>
+        {
+            new BreadcrumbItem(Localizer["Menu_Home"], "/"),
+            new BreadcrumbItem(Localizer["Pages_Projects_ManageProjects_Title"], "/projects")
+        };
+    }
+
+    /// <summary>
+    /// Initializes the page.
+    /// </summary>
+    /// <returns></returns>
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            await base.OnInitializedAsync();
+
+            // Get a list of all the vendors in the system.
+            model.Vendors = await AdminContext.Client.SearchVendorsAsync(null, null);
+            model.Projects = await AdminContext.Client.SearchProjectsAsync(null, null, false);
+
+            IsInitialized = true;
+            IsBusy = false;
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex);
+        }
+
+    }
+
+    string GetVendorNames(List<string> selectedVendors)
+    {
+        if(selectedVendors == null || selectedVendors.Count == 0)
+        {
+            return string.Empty;
+        }
+        return string.Join(", ", selectedVendors);
+    }
+
+    /// <summary>
+    /// Helper method to look up a vendor name.
+    /// </summary>
+    /// <param name="vendorId"></param>
+    /// <returns></returns>
+    string? GetVendorName(Guid vendorId)
+    {
+        return model?.Vendors?.Find(v => v.VendorId == vendorId)?.Info.Name;
+    }
+
+    /// <summary>
+    /// Gets the project name.
+    /// </summary>
+    /// <param name="vendorId"></param>
+    /// <param name="vsnProjectId"></param>
+    /// <returns></returns>
+    string? GetProjectName(Guid vendorId, string? vsnProjectId)
+    {
+        return model?.Projects?.Find(v => v.VendorId == vendorId && string.Compare(v.VsnProjectId, vsnProjectId, true) == 0)?.Info.Name;
+    }
+
+    /// <summary>
+    /// Saves the user information.
+    /// </summary>
+    /// <returns></returns>
+    async Task SaveAsync()
+    {
+        if(model.SelectedProject == null)
+        {
+            return;
+        }
+
+        try
+        {
+            IsBusy = true;
+
+            // Create or update the entity
+            var plotData = model.Plots.Where(p => !string.IsNullOrWhiteSpace(p.PlotName)).ToList();
+
+            await AdminContext.Client.ImportVsnPlotsAsync(model.SelectedProject.VendorId, model.SelectedProject.ProjectId, plotData);
+
+            IsBusy = false;
+
+            // Add snackbar item.
+            Snackbar.Add(Localizer["General_ProjectSaved"], Severity.Normal);
+
+            Navigation.NavigateTo($"/plots");
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex);
+        }
+    }
+
+    /// <summary>
+    /// Model class for this page.
+    /// </summary>
+    class ImportFormModel
+    {
+        public ImportFormModel()
+        {
+            Plots.Add(new ImportPlotData());
+            Plots.Add(new ImportPlotData());
+            Plots.Add(new ImportPlotData());
+        }
+
+        [Required]
+        public ProjectModel? SelectedProject {get; set;}
+        public List<ProjectModel>? Projects { get; set; }
+        public List<VendorModel>? Vendors { get; set; }
+        public List<ImportPlotData> Plots { get; set; } = new();
+    }
+
+
+}

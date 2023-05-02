@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="eLiDAR.MainShell"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:eLiDAR"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:eLiDAR;assembly=eVSN"
+    mc:Ignorable="d" >
+    <!--<ShellItem>
+        <ShellContent>
+            <pages:MainPage />
+        </ShellContent>
+    </ShellItem>-->
+    <TabBar>
+        <Tab Title="Main">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesome}"
+                    Glyph="{x:Static local:IconFont.Home}"
+                    Size="14" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:Views.Main}" />
+        </Tab>
+        <!--ShellContent Title="Main" Icon="Assets/home.png" ContentTemplate="{DataTemplate pages:Views.Main}" />
+        <ShellContent Title="Data" Icon="Assets/grid.png" ContentTemplate="{DataTemplate pages:Views.ProjectList}" />
+        <ShellContent Title="Settings" Icon="Assets/gear.png" ContentTemplate="{DataTemplate pages:Views.SettingsPage}" />
+        <ShellContent Title="Info" Icon="Assets/icon_feed.png" ContentTemplate="{DataTemplate pages:Views.About}" />
+        <ShellContent Title="Synch" Icon="Assets/icon_feed.png" ContentTemplate="{DataTemplate pages:Views.About}" />-->
+
+        <Tab Title="Login" IsVisible="{Binding IsNotLoggedIn }">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesome}"
+                    Glyph="{x:Static local:IconFont.SignInAlt}"
+                    Size="14" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:Views.Login}" />
+        </Tab>
+        
+        <Tab Title="Data" IsVisible="{Binding IsLoggedIn }">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesome}"
+                    Glyph="{x:Static local:IconFont.ClipboardList}"
+                    Size="14" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:Views.ProjectList}" />
+        </Tab>
+        <Tab Title="Settings" IsVisible="{Binding IsLoggedIn }">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesome}"
+                    Glyph="{x:Static local:IconFont.Cog}"
+                    Size="14" />
+            </Tab.Icon>
+
+            <ShellContent ContentTemplate="{DataTemplate pages:Views.SettingsPage}" />
+        </Tab>
+        <Tab Title="Info">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesome}"
+                    Glyph="{x:Static local:IconFont.InfoCircle}"
+                    Size="14" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:Views.About}" />
+        </Tab>
+        <Tab Title="Synch" IsVisible="{Binding IsLoggedIn }">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{StaticResource FontAwesome}"
+                    Glyph="{x:Static local:IconFont.Sync}"
+                    Size="14" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:Views.PlotSynchList}" />
+        </Tab>
+
+    </TabBar>
+</Shell>

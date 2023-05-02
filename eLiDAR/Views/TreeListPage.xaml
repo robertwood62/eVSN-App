@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="eLiDAR.Views.TreeListPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    Title="{Binding Title}"
+    BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.ForegroundColor="{StaticResource cerulean}"
+    Shell.TitleColor="{StaticResource cerulean}">
+    <Grid Padding="10,10,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackLayout Orientation="Horizontal"  Grid.Row="0"  Grid.ColumnSpan="2" >
+            <SearchBar
+                x:Name="MainSearch"
+                HorizontalOptions="StartAndExpand" 
+                CancelButtonColor="{StaticResource cerulean}"
+                HorizontalTextAlignment="Start"
+                Keyboard="Numeric"
+                Placeholder="Search trees..."
+                PlaceholderColor="{DynamicResource TextPrimaryColor}"
+                Style="{DynamicResource TextSubheadSearchBar}"
+                TextChanged="SearchBar_OnTextChanged" />
+            <Label Text="Sort on Species, DBH" HorizontalOptions="End" VerticalTextAlignment="Center"  />
+            <Switch
+                 x:Name="swchSort"
+                 HorizontalOptions="End"
+                 IsToggled="{Binding DefaultSort}"
+                 Toggled="OnToggled"/>
+            </StackLayout>
+        </Grid>
+        <ListView
+            x:Name="MyListView"
+            Grid.Row="1"
+            BackgroundColor="{DynamicResource backgroundColor}"
+            HasUnevenRows="true"
+            ItemsSource="{Binding TreeStemListFull}"
+            SelectedItem="{Binding SelectedTreeItem, Mode=TwoWay}"
+            SeparatorColor="{DynamicResource AccentColor}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid x:Name="Item" Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Grid.Column="0" Spacing="1">
+                                    <StackLayout Orientation="Horizontal">
+                                    <xct:BadgeView
+                                        BackgroundColor="{DynamicResource tomato}"
+                                        AutoHide="True" 
+                                        FontAttributes="Bold"
+                                        FontSize="Small"
+                                        TextColor="White"
+                                        BadgePosition="TopLeft" 
+                                        Text="{Binding ERRORCOUNT}">
+                                        <Label
+                                            HorizontalTextAlignment="Start"
+                                            Style="{DynamicResource TextTitle}"
+                                            VerticalTextAlignment="Center" >
+                                         <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Tree "/>
+                                                <Span Text="{Binding TREENUMBER}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                        </Label>
+                                    </xct:BadgeView>
+
+                                    </StackLayout>
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Style="{DynamicResource TextSubheadSecondary}"
+                                        Text="Species"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        FontSize="20"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{DynamicResource TextSubhead}"
+                                        Text="{Binding SpeciesName}"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" Spacing="1">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Style="{DynamicResource TextSubheadSecondary}"
+                                        Text="DBH(cm)"
+                                        TextColor="{Binding DBHColor}"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Style="{DynamicResource TextSubhead}"
+                                        Text="{Binding DBH , StringFormat='{0:F1}'}"
+                                        TextColor="{Binding DBHColor}"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Style="{DynamicResource TextSubheadSecondary}"
+                                        Text="Ht(m)"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Style="{DynamicResource TextSubhead}"
+                                        Text="{Binding HEIGHT, StringFormat='{0:F2}'}"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubheadSecondary}"
+                                        Text="Status"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubhead}"
+                                        Text="{Binding TREESTATUSCODE}"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout Grid.Column="2" Spacing="1">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubheadSecondary}"
+                                        Text="Dist(m)"
+                                         TextColor="{Binding StemMapColor}"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubhead}"
+                                        Text="{Binding DISTANCE , StringFormat='{0:F2}'}"
+                                        TextColor="{Binding StemMapColor}"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubheadSecondary}"
+                                        Text="Azm"
+                                         TextColor="{Binding StemMapColor}"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubhead}"
+                                        Text="{Binding AZIMUTH}"
+                                        TextColor="{Binding StemMapColor}"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubheadSecondary}"
+                                        Text="Crown Class"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubhead}"
+                                        Text="{Binding CROWNCLASSCODE}"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout Grid.Column="3" Spacing="1" Orientation="Horizontal">
+                               
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubheadSecondary}"
+                                        Text="Core Status "
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        HorizontalTextAlignment="End"
+                                        Style="{DynamicResource TextSubhead}"
+                                        Text="{Binding CORESTATUSCODE}"
+                                        TextColor="{Binding AgeColor}"
+                                        VerticalTextAlignment="Center" />
+                            </StackLayout>
+                            <FlexLayout
+                                Grid.Column="4"
+                                AlignContent="End"
+                                FlowDirection="LeftToRight"
+                                HorizontalOptions="End"
+                                JustifyContent="End"
+                                Wrap="Wrap">
+                                <Button
+                                    Style="{StaticResource RectangularButtonStyle}"
+                                    BindingContext="{Binding Source={x:Reference MyListView}, Path=BindingContext}"
+                                    Command="{Binding ShowAgesCommand}"
+                                    CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"
+                                    HorizontalOptions="End" Text="Ages"
+                                    IsEnabled="{Binding Source={x:Reference Item}, Path=BindingContext.LiveTree}" />
+                                <Button
+                                    Style="{StaticResource RectangularButtonStyle}"
+                                    BindingContext="{Binding Source={x:Reference MyListView}, Path=BindingContext}"
+                                    Command="{Binding ShowFilteredCommand}"
+                                    CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"
+                                    HorizontalOptions="End" Text="Stem Map"
+                                    IsEnabled="{Binding Source={x:Reference Item}, Path=BindingContext.IsPlotTypeB}"/>
+                                <Button
+                                    Style="{StaticResource RectangularButtonStyle}"
+                                    BindingContext="{Binding Source={x:Reference MyListView}, Path=BindingContext}"
+                                    Command="{Binding ShowDeformityCommand}"
+                                    CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"
+                                    HorizontalOptions="End" Text="Deform"
+                                    IsEnabled="{Binding Source={x:Reference Item}, Path=BindingContext.IsPlotTypeC}"/>
+                            </FlexLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Grid.Row="2"  HorizontalOptions="Start" VerticalOptions="Start">
+            <Label Text="{Binding SpeciesComp}"/>
+        </StackLayout>
+        <StackLayout Grid.Row="2"  HorizontalOptions="End" VerticalOptions="Start">
+            <Button x:Name="Button_Round"
+                    Text="+"
+                    Command="{Binding AddCommand}"
+                    Style ="{StaticResource RoundButtonStyle}"/>
+        </StackLayout>
+    </Grid> 
+</ContentPage>

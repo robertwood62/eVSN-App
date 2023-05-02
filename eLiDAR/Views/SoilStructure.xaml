@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="eLiDAR.Views.SoilStructure"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{Binding SoilTitle}"
+    BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.ForegroundColor="{StaticResource cerulean}"
+    Shell.TitleColor="{StaticResource cerulean}"
+    mc:Ignorable="d">
+    <ContentPage.Content>
+        <StackLayout Padding="20" Spacing="12">
+            <Label
+                HorizontalOptions="Start"
+                Style="{StaticResource TextTitle}"
+                Text="Choose from the codes to construct a soil structure." />
+            <Button
+                Style="{StaticResource FormButtonStyle}"
+                Command="{Binding ClearCommand}"
+                Text="Start Over"/>
+            <Picker
+                Title="Soil Structure Grade"
+                HorizontalOptions="FillAndExpand"
+                ItemDisplayBinding="{Binding NAME}"
+                ItemsSource="{Binding ListGrade}"
+                SelectedItem="{Binding SelectedMaster, Mode=TwoWay}"
+                Style="{DynamicResource TextSubheadPicker}"
+                TitleColor="{StaticResource AccentColor}" />
+            <Picker
+                Title="Soil Structure Class"
+                HorizontalOptions="FillAndExpand"
+                ItemDisplayBinding="{Binding NAME}"
+                ItemsSource="{Binding ListClass}"
+                SelectedItem="{Binding SelectedSuffix2, Mode=TwoWay}"
+                Style="{DynamicResource TextSubheadPicker}"
+                TitleColor="{StaticResource AccentColor}" />
+            <Picker
+                Title="Soil Structure Kind"
+                HorizontalOptions="FillAndExpand"
+                ItemDisplayBinding="{Binding NAME}"
+                ItemsSource="{Binding ListKind}"
+                SelectedItem="{Binding SelectedSuffix1, Mode=TwoWay}"
+                Style="{DynamicResource TextSubheadPicker}"
+                TitleColor="{StaticResource AccentColor}" />
+            <Label
+                HorizontalOptions="Start"
+                Style="{StaticResource TextBody}"
+                Text="SOIL STRUCTURE" />
+            <Entry
+                HorizontalOptions="FillAndExpand"
+                IsReadOnly="True"
+                Style="{DynamicResource TextSubheadEntry}"
+                Text="{Binding STRUCTURE}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="eLiDAR.Views.AddDWD"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:eLiDAR.Views"
+    Title="Add DWD Line"
+    BackgroundColor="{DynamicResource backgroundColor}"
+    BindingContext="AddDWDViewModel"
+    Shell.BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.ForegroundColor="{StaticResource cerulean}"
+    Shell.TitleColor="{StaticResource cerulean}">
+    <ScrollView>
+        <StackLayout Padding="5" Spacing="12">
+            <local:DWDView />
+            <Button
+                Style="{StaticResource FormButtonStyle}"
+                Command="{Binding DeleteCommand}"
+                Text="Delete"/>
+            <!--     <Button
+                x:Name="SubmitButton"
+                BackgroundColor="{StaticResource cerulean}"
+                BorderRadius="0"
+                Command="{Binding AddCommand}"
+                Text="Save DWD"
+                TextColor="White" /> -->
+            <!--<Label
+                x:Name="ViewLbl"
+                FontSize="15"
+                HorizontalOptions="EndAndExpand"
+                IsVisible="{Binding IsViewAll}"
+                Text="View All DWD"
+                TextColor="Black">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ViewAllCommand}" NumberOfTapsRequired="1" />
+                </Label.GestureRecognizers>
+            </Label>-->
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

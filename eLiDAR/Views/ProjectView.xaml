@@ -1,0 +1,39 @@
+<ContentView
+    x:Class="eLiDAR.Views.ProjectView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <StackLayout Spacing="12">
+        <Label
+            HorizontalOptions="Start"
+            Style="{StaticResource TextBody}"
+            Text="Project" />
+        <Entry
+            x:Name="txtProject"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            Placeholder="Project Name"
+            Style="{DynamicResource TextSubheadEntry}"
+            Text="{Binding NAME}" />
+        <Label
+            HorizontalOptions="Start"
+            Style="{StaticResource TextBody}"
+            Text="Description" />
+        <Entry
+            x:Name="txtDescription"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            Placeholder="Description"
+            Style="{DynamicResource TextSubheadEntry}"
+            Text="{Binding DESCRIPTION}" />
+        <Label
+            HorizontalOptions="Start"
+            Style="{StaticResource TextBody}"
+            Text="Date" />
+        <DatePicker
+            x:Name="txtDate"
+            Date="{Binding PROJECT_DATE, StringFormat='{0:MMMM dd, yyyy}'}"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            Style="{DynamicResource TextSubheadDatePicker}" />
+    </StackLayout>
+</ContentView>

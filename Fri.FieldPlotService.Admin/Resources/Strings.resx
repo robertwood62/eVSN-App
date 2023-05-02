@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Api_Error_-1" xml:space="preserve">
+    <value>A general error has occurred.</value>
+  </data>
+  <data name="Api_Error_0" xml:space="preserve">
+    <value>Indicates there is a service configuration error.</value>
+  </data>
+  <data name="Api_Error_1" xml:space="preserve">
+    <value>The table being requested is not available for JSON based inserts.</value>
+  </data>
+  <data name="Api_Error_11" xml:space="preserve">
+    <value>The user is currently blocked from using the system.</value>
+  </data>
+  <data name="Api_Error_12" xml:space="preserve">
+    <value>The vendor is currently blocked from using the system.</value>
+  </data>
+  <data name="Api_Error_13" xml:space="preserve">
+    <value>The vendor was not found.</value>
+  </data>
+  <data name="Api_Error_14" xml:space="preserve">
+    <value>A duplicate username already exists in the system.</value>
+  </data>
+  <data name="Api_Error_15" xml:space="preserve">
+    <value>The vendor user was not found.</value>
+  </data>
+  <data name="Api_Error_16" xml:space="preserve">
+    <value>The vendor's name is invalid.</value>
+  </data>
+  <data name="Api_Error_17" xml:space="preserve">
+    <value>The vendor code is invalid.</value>
+  </data>
+  <data name="Api_Error_18" xml:space="preserve">
+    <value>Indicates a vendor with the same code already exists in the database.</value>
+  </data>
+  <data name="Api_Error_19" xml:space="preserve">
+    <value>Vendor deletes are blocked if the vendor has projects in the system.  These must be removed first.</value>
+  </data>
+  <data name="Api_Error_20" xml:space="preserve">
+    <value>The VSN Entity cannot be null.</value>
+  </data>
+  <data name="Api_Error_21" xml:space="preserve">
+    <value>The Plot Name is missing.</value>
+  </data>
+  <data name="Api_Error_22" xml:space="preserve">
+    <value>The Deformity ID is missing.</value>
+  </data>
+  <data name="Api_Error_23" xml:space="preserve">
+    <value>The Tree ID is missing.</value>
+  </data>
+  <data name="Api_Error_24" xml:space="preserve">
+    <value>The Project ID is missing.</value>
+  </data>
+  <data name="Api_Error_25" xml:space="preserve">
+    <value>The Plot ID is missing.</value>
+  </data>
+  <data name="Api_Error_26" xml:space="preserve">
+    <value>The Dwd ID is missing.</value>
+  </data>
+  <data name="Api_Error_27" xml:space="preserve">
+    <value>The Ecosite ID is missing.</value>
+  </data>
+  <data name="Api_Error_28" xml:space="preserve">
+    <value>The Person ID is missing.</value>
+  </data>
+  <data name="Api_Error_29" xml:space="preserve">
+    <value>The Photo ID is missing.</value>
+  </data>
+  <data name="Api_Error_3" xml:space="preserve">
+    <value>The stored procedure failed to update the records in the table.</value>
+  </data>
+  <data name="Api_Error_30" xml:space="preserve">
+    <value>The Small Tree ID is missing.</value>
+  </data>
+  <data name="Api_Error_31" xml:space="preserve">
+    <value>The Project Name is missing.</value>
+  </data>
+  <data name="Api_Error_32" xml:space="preserve">
+    <value>The Small Tree Tally ID is missing.</value>
+  </data>
+  <data name="Api_Error_33" xml:space="preserve">
+    <value>The Soil ID is missing.</value>
+  </data>
+  <data name="Api_Error_34" xml:space="preserve">
+    <value>The Stem Map ID is missing.</value>
+  </data>
+  <data name="Api_Error_35" xml:space="preserve">
+    <value>The Vegetation ID is missing.</value>
+  </data>
+  <data name="Api_Error_36" xml:space="preserve">
+    <value>The Vegetation Census ID is missing.</value>
+  </data>
+  <data name="Api_Error_37" xml:space="preserve">
+    <value>The user information was not provided.</value>
+  </data>
+  <data name="Api_Error_38" xml:space="preserve">
+    <value>The password is missing.</value>
+  </data>
+  <data name="Api_Error_39" xml:space="preserve">
+    <value>The project information is missing.</value>
+  </data>
+  <data name="Api_Error_4" xml:space="preserve">
+    <value>The stored procedure failed to insert the records into the table.</value>
+  </data>
+  <data name="Api_Error_40" xml:space="preserve">
+    <value>The project ID already exists.</value>
+  </data>
+  <data name="Api_Error_41" xml:space="preserve">
+    <value>The project was not found.</value>
+  </data>
+  <data name="Api_Error_42" xml:space="preserve">
+    <value>The VSN Plot name already exists (this must be unique within the entire system).</value>
+  </data>
+  <data name="Api_Error_43" xml:space="preserve">
+    <value>The plot was not found.</value>
+  </data>
+  <data name="Api_Error_5" xml:space="preserve">
+    <value>Indicate that an entity is missing the required ID field.</value>
+  </data>
+  <data name="Api_Error_6" xml:space="preserve">
+    <value>The table already contains a record with the same ID.</value>
+  </data>
+  <data name="Api_Error_7" xml:space="preserve">
+    <value>The table does not contain an existing record with the ID provided.</value>
+  </data>
+  <data name="Api_Error_8" xml:space="preserve">
+    <value>The username is invalid.</value>
+  </data>
+  <data name="Api_Http_400" xml:space="preserve">
+    <value>Bad request made to backend API.</value>
+  </data>
+  <data name="Api_Http_401" xml:space="preserve">
+    <value>Access denied.  You may not have access to perform this operation based on your current role.</value>
+  </data>
+  <data name="Api_Http_500" xml:space="preserve">
+    <value>The backend server appears to be down.</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Field Plots Admin Tool</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Button_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Button_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Dialogs_ErrorDialog_Title" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Error_Code" xml:space="preserve">
+    <value>API error {0}: </value>
+  </data>
+  <data name="Error_Http" xml:space="preserve">
+    <value>HTTP error {0}: </value>
+  </data>
+  <data name="General_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="General_AddProject" xml:space="preserve">
+    <value>Add project</value>
+  </data>
+  <data name="General_AddProjects" xml:space="preserve">
+    <value>Add projects to multiple vendors</value>
+  </data>
+  <data name="General_AddUser" xml:space="preserve">
+    <value>Add user</value>
+  </data>
+  <data name="General_AddVendor" xml:space="preserve">
+    <value>Add vendor</value>
+  </data>
+  <data name="General_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="General_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="General_ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="General_ConfirmProjectDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this project?</value>
+  </data>
+  <data name="General_ConfirmUserDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this user?</value>
+  </data>
+  <data name="General_ConfirmVendorDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this vendor?</value>
+  </data>
+  <data name="General_ContactInfo" xml:space="preserve">
+    <value>Contact info</value>
+  </data>
+  <data name="General_DashboardResults" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="General_DeformityData" xml:space="preserve">
+    <value>Deformity information</value>
+  </data>
+  <data name="General_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="General_Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="General_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="General_Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="General_DwdData" xml:space="preserve">
+    <value>DWD information</value>
+  </data>
+  <data name="General_EcoSiteData" xml:space="preserve">
+    <value>Eco site information</value>
+  </data>
+  <data name="General_EndDate" xml:space="preserve">
+    <value>To date</value>
+  </data>
+  <data name="General_FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="General_Greeting" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="General_ImportPlots" xml:space="preserve">
+    <value>Import plots</value>
+  </data>
+  <data name="General_IncludeDeleted" xml:space="preserve">
+    <value>Included deleted</value>
+  </data>
+  <data name="General_InProgress" xml:space="preserve">
+    <value>In progress</value>
+  </data>
+  <data name="General_Keyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="General_LastChanged" xml:space="preserve">
+    <value>Last changed</value>
+  </data>
+  <data name="General_LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="General_Login" xml:space="preserve">
+    <value>Sign-in</value>
+  </data>
+  <data name="General_MonthlyActivity" xml:space="preserve">
+    <value>Monthly collection activity</value>
+  </data>
+  <data name="General_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="General_NotStarted" xml:space="preserve">
+    <value>Not started</value>
+  </data>
+  <data name="General_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="General_PasswordReset" xml:space="preserve">
+    <value>The user's password has been reset.</value>
+  </data>
+  <data name="General_PeopleData" xml:space="preserve">
+    <value>Crew information</value>
+  </data>
+  <data name="General_PhotoData" xml:space="preserve">
+    <value>Photo information</value>
+  </data>
+  <data name="General_PlotData" xml:space="preserve">
+    <value>Plot information</value>
+  </data>
+  <data name="General_PlotMetrics" xml:space="preserve">
+    <value>Plot collection statistics</value>
+  </data>
+  <data name="General_PlotNameKeyword" xml:space="preserve">
+    <value>Plot name keyword</value>
+  </data>
+  <data name="General_PlotSummary" xml:space="preserve">
+    <value>Plot summary</value>
+  </data>
+  <data name="General_PlotTypeCode" xml:space="preserve">
+    <value>Plot type</value>
+  </data>
+  <data name="General_ProjectData" xml:space="preserve">
+    <value>Project information</value>
+  </data>
+  <data name="General_ProjectDate" xml:space="preserve">
+    <value>Project date</value>
+  </data>
+  <data name="General_ProjectDeleted" xml:space="preserve">
+    <value>The project has been deleted.</value>
+  </data>
+  <data name="General_ProjectName" xml:space="preserve">
+    <value>Project name</value>
+  </data>
+  <data name="General_ProjectSaved" xml:space="preserve">
+    <value>Your project information has been saved.</value>
+  </data>
+  <data name="General_ResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="General_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="General_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="General_SearchResults" xml:space="preserve">
+    <value>Search results</value>
+  </data>
+  <data name="General_SignIn" xml:space="preserve">
+    <value>Sign-in</value>
+  </data>
+  <data name="General_SmallTreeData" xml:space="preserve">
+    <value>Small tree information</value>
+  </data>
+  <data name="General_SmallTreeTallyData" xml:space="preserve">
+    <value>Small tree tally information</value>
+  </data>
+  <data name="General_SoilData" xml:space="preserve">
+    <value>Soil information</value>
+  </data>
+  <data name="General_StartDate" xml:space="preserve">
+    <value>From date</value>
+  </data>
+  <data name="General_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="General_StemMapData" xml:space="preserve">
+    <value>Stem map information</value>
+  </data>
+  <data name="General_TreeData" xml:space="preserve">
+    <value>Tree information</value>
+  </data>
+  <data name="General_TreeList" xml:space="preserve">
+    <value>List of trees</value>
+  </data>
+  <data name="General_UserDeleted" xml:space="preserve">
+    <value>The user has been deleted.</value>
+  </data>
+  <data name="General_Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="General_UserSaved" xml:space="preserve">
+    <value>The user information has been saved.</value>
+  </data>
+  <data name="General_UserStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="General_VegetationCensuseData" xml:space="preserve">
+    <value>Vegetation census information</value>
+  </data>
+  <data name="General_VegetationData" xml:space="preserve">
+    <value>Vegetation information</value>
+  </data>
+  <data name="General_VendorCode" xml:space="preserve">
+    <value>Vendor code</value>
+  </data>
+  <data name="General_VendorDeleted" xml:space="preserve">
+    <value>The vendor has been deleted.</value>
+  </data>
+  <data name="General_VendorName" xml:space="preserve">
+    <value>Vendor name</value>
+  </data>
+  <data name="General_VendorSaved" xml:space="preserve">
+    <value>The vendor information has been updated.</value>
+  </data>
+  <data name="General_VendorStatus" xml:space="preserve">
+    <value>Vendor status</value>
+  </data>
+  <data name="General_VsnDataTableEmpty" xml:space="preserve">
+    <value>No data available.</value>
+  </data>
+  <data name="General_VsnMeasureTypeCode" xml:space="preserve">
+    <value>Measure Type</value>
+  </data>
+  <data name="General_VsnMeasureYear" xml:space="preserve">
+    <value>Measure Year</value>
+  </data>
+  <data name="General_VsnPlotName" xml:space="preserve">
+    <value>VSN Plot Name</value>
+  </data>
+  <data name="General_VsnPlotNames" xml:space="preserve">
+    <value>VSN Plot names (comma separated)</value>
+  </data>
+  <data name="General_VsnPlotOverviewDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="General_VsnPlotTypeCode" xml:space="preserve">
+    <value>Plot Type</value>
+  </data>
+  <data name="General_VsnProjectId" xml:space="preserve">
+    <value>VSN Project ID</value>
+  </data>
+  <data name="General_VsnTableName" xml:space="preserve">
+    <value>VSN Table</value>
+  </data>
+  <data name="General_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="General_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Menu_Export" xml:space="preserve">
+    <value>Export Data</value>
+  </data>
+  <data name="Menu_Home" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Menu_Plots" xml:space="preserve">
+    <value>Field Plots</value>
+  </data>
+  <data name="Menu_Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="Menu_Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Menu_Vendors" xml:space="preserve">
+    <value>Vendors</value>
+  </data>
+  <data name="Pages_Dashboard_Title" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Pages_Plots_ImportPlots_Title" xml:space="preserve">
+    <value>Import project plots</value>
+  </data>
+  <data name="Pages_Plots_ManagePlots_Title" xml:space="preserve">
+    <value>Manage plots</value>
+  </data>
+  <data name="Pages_Plots_ViewPlot_Title" xml:space="preserve">
+    <value>View plot details</value>
+  </data>
+  <data name="Pages_Projects_AddProjects_Title" xml:space="preserve">
+    <value>Add a project for multiple vendors</value>
+  </data>
+  <data name="Pages_Projects_AddProject_Title" xml:space="preserve">
+    <value>Create a new project</value>
+  </data>
+  <data name="Pages_Projects_EditProject_Title" xml:space="preserve">
+    <value>Edit project</value>
+  </data>
+  <data name="Pages_Projects_ManageProjects_Title" xml:space="preserve">
+    <value>Manage projects</value>
+  </data>
+  <data name="Pages_Reports_DownloadTable_Title" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="Pages_Users_AddUser_Title" xml:space="preserve">
+    <value>Add a new user</value>
+  </data>
+  <data name="Pages_Users_EditUser_Title" xml:space="preserve">
+    <value>Edit a user</value>
+  </data>
+  <data name="Pages_Users_ManageUsers_Title" xml:space="preserve">
+    <value>Manage users</value>
+  </data>
+  <data name="Pages_Users_ResetPassword_Title" xml:space="preserve">
+    <value>Reset user password</value>
+  </data>
+  <data name="Pages_Vendors_AddVendor_Title" xml:space="preserve">
+    <value>Add a new vendor</value>
+  </data>
+  <data name="Pages_Vendors_EditVendor_Title" xml:space="preserve">
+    <value>Edit vendor</value>
+  </data>
+  <data name="Pages_Vendors_ManageVendors_Title" xml:space="preserve">
+    <value>Manage vendors</value>
+  </data>
+  <data name="Placeholder_Keyword" xml:space="preserve">
+    <value>Enter a keyword</value>
+  </data>
+  <data name="Placeholder_Year" xml:space="preserve">
+    <value>Ex: 2022</value>
+  </data>
+  <data name="UserStatusType_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="UserStatusType_Blocked" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+  <data name="VendorStatusType_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="VendorStatusType_Blocked" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+</root>

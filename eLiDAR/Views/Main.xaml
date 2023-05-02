@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="eLiDAR.Views.Main"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    Shell.TitleColor="{StaticResource cerulean}"
+    mc:Ignorable="d">
+    <ContentPage.Content>
+        <Grid Padding="0">
+            <Image Aspect="AspectFill"  Source="{xct:ImageResource Id=eLiDAR.Assets.Images.lidar.png}" Opacity="0.5" />
+            <ScrollView>
+                <StackLayout
+                    BackgroundColor="Transparent"
+                    MinimumHeightRequest="50"
+                    Orientation="Vertical" VerticalOptions="Center" Padding="10,10,10,10"   >
+                    <Label
+                        BackgroundColor="Transparent"
+                        FontFamily="{StaticResource FontAwesome}"
+                        FontSize="17"
+                        FontAttributes="Bold" 
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center" 
+                        IsVisible="True"
+                        Text="This app was developed for ground plot data collection in the Ontario Forest Resource Inventory Program."
+                        TextColor="Black"
+                        VerticalOptions="Fill"  />
+                    <Label
+                        BackgroundColor="Transparent"
+                        FontAttributes="Bold"
+                        FontFamily="{StaticResource FontAwesome}"
+                        FontSize="40"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center" 
+                        Text="eVSN for Ontario FRI"
+                        TextColor="White" 
+                        VerticalOptions="Fill"   />
+                    <Label
+                        BackgroundColor="Transparent" 
+                        FontFamily="{StaticResource FontAwesome}"
+                        FontSize="14"
+                        FontAttributes="Bold" 
+                        HorizontalOptions="CenterAndExpand" 
+                        IsVisible="True"
+                        Opacity="1"
+                        Text="Developed in 2020, 2021, 2022"
+                        TextColor="Black"   />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

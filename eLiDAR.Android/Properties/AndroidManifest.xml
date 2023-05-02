@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="25" package="ca.ontario.mnrf.fri.fieldapp" android:installLocation="auto" android:versionName="black walnut">
+	<uses-sdk android:minSdkVersion="31" android:targetSdkVersion="31" />
+	<application android:label="eVSN.Android" android:allowBackup="false" android:icon="@mipmap/Heatmap"></application>
+</manifest>

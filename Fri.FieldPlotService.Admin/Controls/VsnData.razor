@@ -1,0 +1,32 @@
+﻿@inherits BasePage
+
+<MudStack AlignItems="AlignItems.Start" Row="false">
+    <MudText Typo="Typo.h4">@Title</MudText>
+    @if (Entity != null && Entity.Data != null)
+    {
+        <MudGrid Spacing="0">
+            @foreach (var key in Entity.Data.Keys)
+            {
+                <MudItem xs="12" sm="6" md="6" lg="6" xl="6" xxl="6">
+                    <MudText>@key</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6" xl="6" xxl="6">
+                    <MudText>@(FormatHelper.GetValue(Entity.Data, key))</MudText>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    else
+    {
+        <MudText Color="Color.Warning">@Localizer["General_VsnDataTableEmpty"]</MudText>
+    }
+</MudStack>
+
+@code {
+    [Parameter]
+    public IVendorEntity? Entity { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+}
+

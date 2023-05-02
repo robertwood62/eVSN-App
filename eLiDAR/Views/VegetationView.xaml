@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="eLiDAR.Views.VegetationView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:dm="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ContentView.Content>
+
+        <StackLayout Grid.Row="0" Grid.Column="0">
+
+            <Label
+                HorizontalOptions="Start"
+                Style="{StaticResource TextTitle}"
+                Text="Choose from the Ontario plant list with nearly 5,000 species in the list." />
+            <dm:AutoSuggestBox
+                x:Name="txtVeg"
+                PlaceholderText="Enter a 7-letter veg code"
+                PlaceholderTextColor="{StaticResource AccentColor}"
+                Text="{Binding SPECIES, Mode=TwoWay}"
+                TextChanged="TxtVeg_TextChanged"
+                TextColor="{DynamicResource TextPrimaryColor}" />
+            <Label
+                x:Name="txtscientific"
+                Style="{StaticResource TextBody}"
+                Text="{Binding GetScientific, Mode=TwoWay}" />
+            <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextBody}"
+                        Text="{Binding ERRORMSG}"/>
+            <Grid Padding="10" ColumnSpacing=" 1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Row="0" Grid.Column="0">
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextBody}"
+                        Text="Specimen Number" />
+                    <Entry
+                        x:Name="txtSpecimen"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Numeric"
+                        Placeholder="Specimen Number"
+                        Style="{DynamicResource TextSubheadEntry}"
+                        Text="{Binding SPECIMENNUMBER}" />
+                </StackLayout> 
+                <StackLayout Grid.Row="1" Grid.Column="0">
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextTitle}"
+                        Text="Quadrants % Cover &#x0a; " />
+
+                    <StackLayout Orientation="Horizontal" Spacing="5">
+                        <StackLayout >
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                            Text="Quad 1" />
+                            <Entry
+                            x:Name="txtQuad1"
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 1 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD1}" />
+                        </StackLayout>
+                        <StackLayout >
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                            Text="Quad 2" />
+                            <Entry
+                            x:Name="txtQuad2"
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 2 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD2}" />
+                        </StackLayout>
+                        <StackLayout >
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                            Text="Quad 3" />
+                            <Entry
+                            x:Name="txtQuad3"
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 3 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD3}" />
+                        </StackLayout>
+                        <StackLayout >
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                            Text="Quad 4" />
+                            <Entry
+                            x:Name="txtQuad4"
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 4 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD4}" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="5">
+                        <StackLayout >
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                            Text="ELC Layer 4 Quads" />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 1 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD1_ELC4}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry 
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 2 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD2_ELC4}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 3 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD3_ELC4}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 4 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD4_ELC4}" />
+                            </StackLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="5">
+                        <StackLayout >
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                            Text="ELC Layer 5 Quads" />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 1 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD1_ELC5}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry 
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 2 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD2_ELC5}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 3 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD3_ELC5}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 4 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD4_ELC5}" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="5">
+                        <StackLayout >
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                            Text="ELC Layer 6 Quads" />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 1 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD1_ELC6}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry 
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 2 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD2_ELC6}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 3 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD3_ELC6}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 4 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD4_ELC6}" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="5">
+                        <StackLayout >
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                            Text="ELC Layer 7 Quads" />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 1 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD1_ELC7}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry 
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 2 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD2_ELC7}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 3 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD3_ELC7}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextBody}"
+                             />
+                            <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Numeric"
+                            Placeholder="Quad 4 % Cover"
+                            Style="{DynamicResource TextSubheadEntry}"
+                            Text="{Binding QUAD4_ELC7}" />
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Grid.Row="1" Grid.Column="1">
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextTitle}"
+                        Text="ELC Layer % Cover&#x0a;(sum across the quadrants)"/>
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextBody}"
+                        Text="ELC Layer 3 (2-10m inc. shrubs >10m)"/>
+                    <Entry
+                        x:Name="txtELClayer3"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Numeric"
+                        Placeholder="ELC Layer 3 % Cover"
+                        Style="{DynamicResource TextSubheadEntry}"
+                        Text="{Binding ELCLAYER3}" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextBody}"
+                        Text="ELC Layer 4 (0.5-1.99m trees, shrubs)"/>
+                    <Entry
+                        x:Name="txtELClayer4"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Numeric"
+                        Placeholder="ELC Layer 4 % Cover"
+                        Style="{DynamicResource TextSubheadEntry}"
+                        Text="{Binding ELCLAYER4}" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextBody}"
+                        Text="ELC Layer 5 ( &lt; 0.5m trees, shrubs)"/>
+                    <Entry
+                        x:Name="txtELClayer5"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Numeric"
+                        Placeholder="ELC Layer 5 % Cover"
+                        Style="{DynamicResource TextSubheadEntry}"
+                        Text="{Binding ELCLAYER5}" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextBody}"
+                        Text="ELC Layer 6 (herbs, sedges, grass)" />
+                    <Entry
+                        x:Name="txtELClayer6"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Numeric"
+                        Placeholder="ELC Layer 6 % Cover"
+                        Style="{DynamicResource TextSubheadEntry}"
+                        Text="{Binding ELCLAYER6}" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextBody}"
+                        Text="ELC Layer 7 (bryophytes, lichens)" />
+                    <Entry
+                        x:Name="txtELClayer7"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Numeric"
+                        Placeholder="ELC Layer 7 % Cover"
+                        Style="{DynamicResource TextSubheadEntry}"
+                        Text="{Binding ELCLAYER7}" />
+                </StackLayout>
+            </Grid>
+            <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextError}"
+                        Text="{Binding ERRORMSG}"/>
+            <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextBody}"
+                        Text="The auto-calculate function can be turned off and on in 'Settings'" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

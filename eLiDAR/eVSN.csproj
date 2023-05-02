@@ -1,0 +1,376 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>eVSN</AssemblyName>
+    <RootNamespace>eLiDAR</RootNamespace>
+    <Version>2.0.0</Version>
+    <Company>Forsite Consultants Ltd</Company>
+    <Authors>Craig Robinson</Authors>
+    <Description>App for the data collection of VSN plots for Ontario LiDAR Inventory program.  This app collects plot types A, B and C.</Description>
+	  <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="6.0.6" />
+    <PackageReference Include="dotMorten.Xamarin.Forms.AutoSuggestBox" Version="1.1.1" />
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.5" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
+    <PackageReference Include="LiveXAML" Version="2.1.73" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="FlyoutHeader.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="FlyoutHeader.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\Images\drainage.jpg" />
+    <None Remove="Assets\Images\humusform.jpg" />
+    <None Remove="Assets\Images\leaves.jpg" />
+    <None Remove="Assets\Images\leaves.png" />
+    <None Remove="Assets\Images\lidar.jpg" />
+    <None Remove="Assets\Images\lidar.png" />
+    <None Remove="Assets\Images\moistureregime.jpg" />
+    <None Remove="Assets\Images\stratification.jpg" />
+    <None Remove="Data\colours.txt" />
+    <None Remove="Data\Ecosites.txt" />
+    <None Remove="Data\Genus.txt" />
+    <None Remove="Data\Horizons.txt" />
+    <None Remove="Data\Plants.txt" />
+    <None Remove="Data\Structure.txt" />
+    <None Remove="Images\lidar.jpg" />
+    <None Remove="Images\photo.png" />
+    <None Remove="Images\pine.jpg" />
+    <None Remove="Images\shells_01.jpg" />
+    <None Remove="Images\shell_01.jpg" />
+    <None Remove="Images\snail_01.jpg" />
+    <None Remove="ViewModels\CameraViewModel.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Images\drainage.jpg" />
+    <EmbeddedResource Include="Assets\Images\humusform.jpg" />
+    <EmbeddedResource Include="Assets\Images\leaves.jpg" />
+    <EmbeddedResource Include="Assets\Images\leaves.png" />
+    <EmbeddedResource Include="Assets\Images\lidar.jpg" />
+    <EmbeddedResource Include="Assets\Images\lidar.png" />
+    <EmbeddedResource Include="Assets\Images\moistureregime.jpg" />
+    <EmbeddedResource Include="Assets\Images\stratification.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\colours.txt">
+      <Generator>MSBuild.Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Ecosites.txt">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Genus.txt">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Horizons.txt">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Plants.txt">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Structure.txt">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\lidar.jpg" />
+    <EmbeddedResource Include="Images\photo.png" />
+    <EmbeddedResource Include="Images\pine.jpg" />
+    <EmbeddedResource Include="Images\shells_01.jpg" />
+    <EmbeddedResource Include="Images\shell_01.jpg" />
+    <EmbeddedResource Include="Images\snail_01.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MainShell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AddSmallTreeTally.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\CameraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Main.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PlotView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SelectEnvironment.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SmallTreeTally.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SmallTreeTallyDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SmallTreeTallyList.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SmallTreeTallyView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TreeComments.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pages\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\AddDWDAccum.xaml.cs">
+      <DependentUpon>AddDWDAccum.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddDWD.xaml.cs">
+      <DependentUpon>AddDWD.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddPerson.xaml.cs">
+      <DependentUpon>AddPerson.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddSmallTree.xaml.cs">
+      <DependentUpon>AddSmallTree.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddDeformity.xaml.cs">
+      <DependentUpon>AddDeformity.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddPhoto.xaml.cs">
+      <DependentUpon>AddPhoto.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddVegetationCensus.xaml.cs">
+      <DependentUpon>AddVegetationCensus.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\GleyColour.xaml.cs">
+      <DependentUpon>GleyColour.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Image.xaml.cs">
+      <DependentUpon>Image.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PlotCrew.xaml.cs">
+      <DependentUpon>PlotCrew.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MottleColour.xaml.cs">
+      <DependentUpon>MottleColour.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PersonList.xaml.cs">
+      <DependentUpon>PersonList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PersonView.xaml.cs">
+      <DependentUpon>PersonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PersonDetailsPage.xaml.cs">
+      <DependentUpon>PersonDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ForestHealth.xaml.cs">
+      <DependentUpon>ForestHealth.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DefaultPage.xaml.cs">
+      <DependentUpon>DefaultPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PlotSynchList.xaml.cs">
+      <DependentUpon>PlotSynchList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Texture.xaml.cs">
+      <DependentUpon>Texture.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StandInfo.xaml.cs">
+      <DependentUpon>StandInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SoilColour.xaml.cs">
+      <DependentUpon>SoilColour.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SoilStructure.xaml.cs">
+      <DependentUpon>SoilStructure.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SoilHorizon.xaml.cs">
+      <DependentUpon>SoilHorizon.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EcositeCode.xaml.cs">
+      <DependentUpon>EcositeCode.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EcositeDetailsPage.xaml.cs">
+      <DependentUpon>EcositeDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddVegetation.xaml.cs">
+      <DependentUpon>AddVegetation.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddSoil.xaml.cs">
+      <DependentUpon>AddSoil.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddTree.xaml.cs">
+      <DependentUpon>AddTree.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddPlot.xaml.cs">
+      <DependentUpon>AddPlot.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DeformityList.xaml.cs">
+      <DependentUpon>DeformityList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DWDAccumView.xaml.cs">
+      <DependentUpon>DWDAccumView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DWDAccumDetailsPage.xaml.cs">
+      <DependentUpon>DWDAccumDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DWDView.xaml.cs">
+      <DependentUpon>DWDView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EcositeView.xaml.cs">
+      <DependentUpon>EcositeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PlotFilterList.xaml.cs">
+      <DependentUpon>PlotFilterList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DeformityDetailsPage.xaml.cs">
+      <DependentUpon>DeformityDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SmallTreeList.xaml.cs">
+      <DependentUpon>SmallTreeList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SmallTreeDetailsPage.xaml.cs">
+      <DependentUpon>SmallTreeDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SmallTreeView.xaml.cs">
+      <DependentUpon>SmallTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DWDDetailsPage.xaml.cs">
+      <DependentUpon>DWDDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DWDList.xaml.cs">
+      <DependentUpon>DWDList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DeformityView.xaml.cs">
+      <DependentUpon>DeformityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PlotComments.xaml.cs">
+      <DependentUpon>PlotComments.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EcositeComments.xaml.cs">
+      <DependentUpon>EcositeComments.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StemMapView.xaml.cs">
+      <DependentUpon>StemMapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TreeAge.xaml.cs">
+      <DependentUpon>TreeAge.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\VegetationCensusList.xaml.cs">
+      <DependentUpon>VegetationCensusList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\VegetationCensusDetailsPage.xaml.cs">
+      <DependentUpon>VegetationCensusDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PhotoList.xaml.cs">
+      <DependentUpon>PhotoList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PhotoDetailsPage.xaml.cs">
+      <DependentUpon>PhotoDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\VegetationList.xaml.cs">
+      <DependentUpon>VegetationList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\VegetationCensusView.xaml.cs">
+      <DependentUpon>VegetationCensusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PhotoView.xaml.cs">
+      <DependentUpon>PhotoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\VegetationView.xaml.cs">
+      <DependentUpon>VegetationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\VegetationDetailsPage.xaml.cs">
+      <DependentUpon>VegetationDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StemMapDetailsPage.xaml.cs">
+      <DependentUpon>StemMapDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SoilDetailsPage.xaml.cs">
+      <DependentUpon>SoilDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TreeDetailsPage.xaml.cs">
+      <DependentUpon>TreeDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SoilList.xaml.cs">
+      <DependentUpon>SoilList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SoilView.xaml.cs">
+      <DependentUpon>SoilView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TreeView.xaml.cs">
+      <DependentUpon>TreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TreeList.xaml.cs">
+      <DependentUpon>TreeList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PlotView.xaml.cs">
+      <DependentUpon>PlotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PlotList.xaml.cs">
+      <DependentUpon>PlotList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PlotDetailsPage.xaml.cs">
+      <DependentUpon>PlotDetailsPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="AppShell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\ActivityPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\CameraPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\FeedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\NotificationsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\UpdatesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Styles\Global.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+</Project>

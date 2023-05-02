@@ -1,0 +1,246 @@
+﻿@page "/user/{Id:guid?}"
+@inherits BasePage
+
+<BusyIndicator Model="@this" />
+<MudBreadcrumbs Items="@Breadcrumbs" />
+
+@if (IsInitialized)
+{
+    if (Id == null)
+    {
+        <PageTitle>@Localizer["Pages_Users_AddUser_Title"]</PageTitle>
+        <MudText Class="mb-3" Typo="Typo.h1">@Localizer["Pages_Users_AddUser_Title"]</MudText>
+    }
+    else
+    {
+        <PageTitle>@Localizer["Pages_Users_EditUser_Title"]</PageTitle>
+        <MudText Class="mb-3" Typo="Typo.h1">@Localizer["Pages_Users_EditUser_Title"]</MudText>
+    }
+
+    <MudPaper Class="pa-3">
+        <EditForm Model="model" OnValidSubmit="SaveAsync">
+            <DataAnnotationsValidator />
+            <MudStack Row="false">
+                @if(Id == null)
+                {
+                    <MudSelect Class="form-field" Margin="Margin.Dense" Variant="Variant.Outlined" Clearable="true" T="VendorModel" @bind-Value="model.SelectedVendor" For="@(() => model.SelectedVendor)" Label="@Localizer["General_VendorName"]" Required="true">
+                        @if (model.Vendors != null)
+                        {
+                            foreach (var vendor in model.Vendors)
+                            {
+                                <MudSelectItem T="VendorModel" Value="@vendor">@vendor.Info.Name</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+                }
+                else
+                {
+                    <MudText>@($"{Localizer["General_VendorName"]}: {model.SelectedVendor?.Info.Name}")</MudText>
+                }
+                <MudTextField Class="form-field" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="model.Username" For="@(() => model.Username)" Label="@Localizer["General_Username"]" Required="true" />
+                <MudTextField Class="form-field" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="model.FirstName" For="@(() => model.FirstName)" Label="@Localizer["General_FirstName"]" Required="false" />
+                <MudTextField Class="form-field" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="model.LastName" For="@(() => model.LastName)" Label="@Localizer["General_LastName"]" Required="false" />
+                <MudSelect Class="form-field" Margin="Margin.Dense" Variant="Variant.Outlined" Required="true" T="UserStatusType" @bind-Value="model.Status" Label="@Localizer["General_VendorStatus"]">
+                    <MudSelectItem T="UserStatusType" Value="@UserStatusType.Active">@Localizer[$"UserStatusType_{UserStatusType.Active}"]</MudSelectItem>
+                    <MudSelectItem T="UserStatusType" Value="@UserStatusType.Blocked">@Localizer[$"UserStatusType_{UserStatusType.Blocked}"]</MudSelectItem>
+                </MudSelect>
+                @if(Id == null)
+                {
+                    <MudTextField Class="form-field" Margin="Margin.Dense" InputType="InputType.Password" Variant="Variant.Outlined" @bind-Value="model.Password" For="@(() => model.Password)" Label="@Localizer["General_Password"]" Required="Id == null" />
+                    <MudTextField Class="form-field" Margin="Margin.Dense" InputType="InputType.Password" Variant="Variant.Outlined" @bind-Value="model.ConfirmPassword" For="@(() => model.ConfirmPassword)" Label="@Localizer["General_ConfirmPassword"]" Required="Id == null" />
+                }
+            </MudStack>
+            <MudStack Row="true" AlignItems="AlignItems.Start" Class="ma-6">
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined">@Localizer["General_Save"]</MudButton>
+                @if (Id != null && Id != Guid.Empty)
+                {
+                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Outlined" OnClick="DeleteAsync">@Localizer["General_Delete"]</MudButton>
+                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Outlined" OnClick="ChangePassword">@Localizer["General_ResetPassword"]</MudButton>
+                }
+            </MudStack>
+        </EditForm>
+    </MudPaper>
+}
+
+
+@code {
+
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    /// <summary>
+    /// Model used for the page.
+    /// </summary>
+    UserFormModel model = new();
+
+    /// <summary>
+    /// Initialize the page.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Breadcrumbs = new List<BreadcrumbItem>
+        {
+            new BreadcrumbItem(Localizer["Menu_Home"], "/"),
+            new BreadcrumbItem(Localizer["Pages_Users_ManageUsers_Title"], "/users")
+        };
+    }
+
+    /// <summary>
+    /// Initializes the page.
+    /// </summary>
+    /// <returns></returns>
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            await base.OnInitializedAsync();
+
+            // Get a list of all the vendors in the system.
+            model.Vendors = await AdminContext.Client.SearchVendorsAsync(null, null);
+
+            // Check if there was an ID passed to edit
+            if (Id != null)
+            {
+                var user = await AdminContext.Client.GetVendorUserAsync(Id.Value);
+                model.Status = user.Info.Status;
+                model.Username = user.Info.Username;
+                model.FirstName = user.Info.FirstName;
+                model.LastName = user.Info.LastName;
+                model.SelectedVendor = model.Vendors?.Find(v => v.VendorId == user.VendorId);
+                
+                // Put something in the password files to avoid validation.
+                model.Password = model.ConfirmPassword = "password";
+            }
+
+            IsInitialized = true;
+            IsBusy = false;
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex);
+        }
+
+    }
+
+    /// <summary>
+    /// Deletes the current user.
+    /// </summary>
+    /// <returns></returns>
+    async Task DeleteAsync()
+    {
+        if (Id != null && await ConfirmAsync(Localizer["General_ConfirmUserDelete"]))
+        {
+            try
+            {
+                IsBusy = true;
+
+                // Delete the vendor
+                await AdminContext.Client.DeleteVendorAsync(Id.Value);
+
+                IsBusy = false;
+
+                // Add snackbar item.
+                Snackbar.Add(Localizer["General_UserDeleted"], Severity.Normal);
+
+                Navigation.NavigateTo($"/users");
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
+    }
+
+    void ChangePassword()
+    {
+        if(Id != null)
+        {
+            var options = new DialogOptions 
+            { 
+                CloseOnEscapeKey = true,
+                FullScreen = false,
+                FullWidth = false,
+                Position = DialogPosition.Center,
+            };
+            var parameters = new DialogParameters
+            {
+                { "Username", model.Username },
+                { "UserId", Id.Value }
+            };
+
+            Dialog?.Show<ResetPassword>(Localizer["Pages_Users_ResetPassword_Title"] ?? "Error", parameters, options);
+        }
+    }
+
+    /// <summary>
+    /// Saves the user information.
+    /// </summary>
+    /// <returns></returns>
+    async Task SaveAsync()
+    {
+        if (model.SelectedVendor == null)
+        {
+            return;
+        }
+
+        try
+        {
+            IsBusy = true;
+
+            // Collect the form data to save.
+            var userInfo = new UserInfo
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Username = model.Username,
+                Status = model.Status,
+            };
+
+            // Create or update the entity
+            if (Id == null || Id == Guid.Empty)
+            {
+                await AdminContext.Client.CreateVendorUserAsync(new NewUserModel
+                {
+                    VendorId = model.SelectedVendor.VendorId,
+                    Info = userInfo,
+                    Password = model.Password
+                });
+            }
+            else
+            {
+                await AdminContext.Client.UpdateVendorUserInfoAsync(Id.Value, userInfo);
+            }
+
+            IsBusy = false;
+
+            // Add snackbar item.
+            Snackbar.Add(Localizer["General_UserSaved"], Severity.Normal);
+
+            Navigation.NavigateTo($"/users");
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex);
+        }
+    }
+
+    /// <summary>
+    /// Model class for this page.
+    /// </summary>
+    class UserFormModel
+    {
+        [Required]
+        public string? Username { get; set; }
+        [Required]
+        public string? Password { get; set; }
+        [Required]
+        [Compare("Password")]
+        public string? ConfirmPassword { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public UserStatusType Status { get; set; } = UserStatusType.Active;
+        [Required]
+        public VendorModel? SelectedVendor { get; set; }
+        public List<VendorModel>? Vendors { get; set; }
+    }
+}

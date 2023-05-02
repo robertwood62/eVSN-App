@@ -1,0 +1,77 @@
+﻿@inherits BasePage
+
+<MudStack AlignItems="AlignItems.Start" Row="false">
+    <MudText Typo="Typo.h4">@Title</MudText>
+    @if (EntityList != null && EntityList.Count > 0)
+    {
+        var headings = GetHeadings();
+
+        <MudTable RowClass="cursor-pointer" Class="my-3" Dense="true" Hover="true" Striped="true" T="IVendorEntity" Items="@EntityList">
+            <HeaderContent>
+                @foreach (var key in headings)
+                {
+                    <MudTh>@key</MudTh>
+                }
+            </HeaderContent>
+            <RowTemplate>
+                @if(context.Data != null)
+                {
+                    foreach (var key in headings)
+                    {
+                        if(@context.Data.ContainsKey(key))
+                        {
+                            <MudTd>@(FormatHelper.GetValue(context.Data, key))</MudTd>
+                        }
+                        else
+                        {
+                            <MudTd>@string.Empty</MudTd>
+                        }
+                    }
+                }
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    }
+    else
+    {
+        <MudText Color="Color.Warning">@Localizer["General_VsnDataTableEmpty"]</MudText>
+    }
+</MudStack>
+
+@code {
+    [Parameter]
+    public List<IVendorEntity>? EntityList { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    List<string> GetHeadings()
+    {
+        var headings = new List<string>();
+
+        if (EntityList != null)
+        {
+            // Iterate through each of the entityes to gather all the possible keys
+            foreach (var entity in EntityList.Where(e => e.Data != null))
+            {
+                foreach (var key in entity.Data.Keys)
+                {
+                    if (!headings.Contains(key))
+                    {
+                        headings.Add(key);
+                    }
+                }
+            }
+            if (headings.Count == 0)
+            {
+                headings.Add("(empty)");
+            }
+        }
+
+        return headings;
+    }
+}
+
+

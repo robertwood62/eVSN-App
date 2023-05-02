@@ -1,0 +1,87 @@
+﻿@page "/plot/{Id:guid}"
+@inherits BasePage
+
+<BusyIndicator Model="@this" />
+<MudBreadcrumbs Items="@Breadcrumbs" />
+<PageTitle>@Localizer["Pages_Plots_ViewPlot_Title"]</PageTitle>
+<MudText Class="mb-3" Typo="Typo.h1">@Localizer["Pages_Plots_ViewPlot_Title"]</MudText>
+
+@if (IsInitialized && model != null)
+{
+    <MudPaper Class="pa-3">
+        <MudStack Spacing="3" AlignItems="AlignItems.Start">
+            <VsnData Entity="@model.Plot" Title="@Localizer["General_PlotData"]" />
+            <VsnData Entity="@model.Project" Title="@Localizer["General_ProjectData"]" />
+            <VsnDataList EntityList="@model.Photos" Title="@Localizer["General_PhotoData"]" />
+            <VsnDataList EntityList="@model.EcoSites" Title="@Localizer["General_EcoSiteData"]" />
+            <VsnDataList EntityList="@model.Dwds" Title="@Localizer["General_DwdData"]" />
+            <VsnDataList EntityList="@model.People" Title="@Localizer["General_PeopleData"]" />
+            <VsnDataList EntityList="@model.Soils" Title="@Localizer["General_SoilData"]" />
+            <VsnDataList EntityList="@model.Vegetations" Title="@Localizer["General_VegetationData"]" />
+            <VsnDataList EntityList="@model.VegetationCensuses" Title="@Localizer["General_VegetationCensuseData"]" />
+            <VsnDataList EntityList="@model.SmallTreeTallies" Title="@Localizer["General_SmallTreeTallyData"]" />
+            <VsnDataList EntityList="@model.SmallTrees" Title="@Localizer["General_SmallTreeData"]" />
+            <MudStack AlignItems="AlignItems.Start" Row="false">
+                <MudText Typo="Typo.h4">@Localizer["General_TreeList"]</MudText>
+                @if (model.Trees != null && model.Trees.Count > 0)
+                {
+                    foreach (var tree in model.Trees)
+                    {
+                        <VsnData Entity="@tree.Tree" Title="@Localizer["General_TreeData"]" />
+                        <VsnDataList EntityList="@tree.StemMaps" Title="@Localizer["General_StemMapData"]" />
+                        <VsnDataList EntityList="@tree.Deformities" Title="@Localizer["General_DeformityData"]" />
+                    }
+                }
+                else
+                {
+                    <MudText Color="Color.Warning">@Localizer["General_VsnDataTableEmpty"]</MudText>
+                }
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+}
+
+
+@code {
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    PlotDetails? model;
+
+    /// <summary>
+    /// Initialize the page.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Breadcrumbs = new List<BreadcrumbItem>
+        {
+            new BreadcrumbItem(Localizer["Menu_Home"], "/"),
+            new BreadcrumbItem(Localizer["Pages_Plots_ManagePlots_Title"], "/plots")
+        };
+    }
+
+    /// <summary>
+    /// Initializes the page.
+    /// </summary>
+    /// <returns></returns>
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            await base.OnInitializedAsync();
+
+            // Get a list of all the vendors in the system.
+            model = await AdminContext.Client.GetPlotDetailsAsync(Id, true);
+
+            IsInitialized = true;
+            IsBusy = false;
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex);
+        }
+
+    }
+
+}

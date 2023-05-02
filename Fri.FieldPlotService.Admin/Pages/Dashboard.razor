@@ -1,0 +1,275 @@
+﻿@page "/dashboard"
+@using System.Net;
+@inherits BasePage
+@inject DownloadHelper downloadHelper
+@attribute [Authorize]
+
+<BusyIndicator Model="@this" />
+<MudBreadcrumbs Items="@Breadcrumbs" />
+
+<PageTitle>@Localizer["Pages_Dashboard_Title"]</PageTitle>
+<MudText Typo="Typo.h1" Class="mb-3">@Localizer["Pages_Dashboard_Title"]</MudText>
+
+@if (IsInitialized)
+{
+    <MudPaper Class="pa-3">
+        <MudGrid>
+            <MudItem>
+                <MudSelect Class="form-field" Margin="Margin.Dense" Variant="Variant.Outlined" Clearable="true" T="VendorModel" @bind-Value="model.SelectedVendor" Label="@Localizer["General_VendorName"]">
+                    @if (model.Vendors != null)
+                    {
+                        foreach (var vendor in model.Vendors)
+                        {
+                            <MudSelectItem T="VendorModel" Value="@vendor">@vendor.Info.Name</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem>
+                <MudSelect Class="form-field" Margin="Margin.Dense" Variant="Variant.Outlined" Clearable="true" T="ProjectModel" @bind-Value="model.SelectedProject" Label="@Localizer["General_ProjectName"]">
+                    @if (model.Projects != null)
+                    {
+                        foreach (var project in model.Projects)
+                        {
+                            <MudSelectItem T="ProjectModel" Value="@project">@($"{project.Info.Name} [{GetVendorName(project.VendorId)}]")</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem>
+                <MudTextField Class="form-field" Margin="Margin.Dense" Required="false" InputType="InputType.Number" Variant="Variant.Outlined" @bind-Value="model.Year" Label="@Localizer["General_Year"]" Placeholder="@Localizer["Placeholder_Year"]" />
+            </MudItem>
+            <MudItem>
+                <MudTextField Class="form-field" Margin="Margin.Dense" Required="false" InputType="InputType.Date" Format="yyyy-MM-dd" For="@(() => model.StartDate)" Variant="Variant.Outlined" @bind-Value="model.StartDate" Label="@Localizer["General_StartDate"]" />
+            </MudItem>
+            <MudItem>
+                <MudTextField Class="form-field" Margin="Margin.Dense" Required="false" InputType="InputType.Date" Format="yyyy-MM-dd" For="@(() => model.EndDate)" Variant="Variant.Outlined" @bind-Value="model.EndDate" Label="@Localizer["General_EndDate"]" />
+            </MudItem>
+            <MudItem>
+                <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <MudIconButton Variant="Variant.Outlined" Color="Color.Primary" Icon="@Icons.Material.Outlined.Search" Title="@Localizer["General_Search"]" Size="Size.Large" OnClick="SearchAsync" />
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+
+        @if (model.Data != null)
+        {
+            <MudGrid Class="mt-5">
+                <MudItem xs="12" sm="12" md="4" lg="4" xxl="4">
+                    <MudStack Row="false" AlignItems="AlignItems.Start">
+                        <MudText Typo="Typo.h3">@Localizer["General_PlotMetrics"]</MudText>
+                        <MudChart ChartType="ChartType.Pie" InputData="@metricsValues" InputLabels="@metricsLabels" Width="100%" Height="300px" />
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="8" lg="8" xxl="8">
+                    <MudStack Row="false" AlignItems="AlignItems.Start">
+                        <MudText Typo="Typo.h3">@Localizer["General_MonthlyActivity"]</MudText>
+                        <MudChart ChartType="ChartType.Bar" ChartSeries="activitySeries" XAxisLabels="activityLabels" Width="100%" Height="300px" />
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="12" lg="12" xxl="12">
+                    <MudStack Row="false" AlignItems="AlignItems.Start">
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h3">@Localizer["General_PlotSummary"]</MudText>
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Download" Title="@Localizer["General_Download"]" OnClick="@(async () => await DownloadPlotsAsync())" />
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true">
+                            @if(model.Data.Plots != null)
+                            {
+                                foreach(var plotType in model.Data.Plots.GroupBy(p=>p.PlotTypeCode).Select(p => p.First().PlotTypeCode))
+                                {
+                                    if(plotType != null)
+                                    {
+                                        var plots = model.Data.Plots.Where(p => p.PlotTypeCode == plotType).ToArray();
+                                        <MudStack Row="false" Spacing="0">
+                                            <MudText Typo="Typo.h6">@($"{Localizer["General_PlotTypeCode"]} {plotType} ({plots.Length})")</MudText>
+                                            @foreach(var plot in plots)
+                                            {
+                                                <MudLink Color="@GetPlotStatusColor(plot)" Target="_new" Href="@($"/plot/{plot.PlotId}")">@plot.PlotName</MudLink>
+                                            }
+                                        </MudStack>
+                                    }
+                                }
+                            }
+                        </MudStack>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        }
+    </MudPaper>
+}
+
+@code
+{
+    DashboardModel model = new();
+
+    double[]? metricsValues;
+    string[]? metricsLabels;
+
+    List<ChartSeries>? activitySeries;
+    string[]? activityLabels;
+
+    /// <summary>
+    /// Initialize the page.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Breadcrumbs = new List<BreadcrumbItem>();
+    }
+
+    /// <summary>
+    /// Initiaizes the page by downloading system statistics.
+    /// </summary>
+    /// <returns></returns>
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            await base.OnInitializedAsync();
+
+            // Get a list of all the vendors in the system.
+            model.Vendors = await AdminContext.Client.SearchVendorsAsync(null, null);
+            model.Projects = await AdminContext.Client.SearchProjectsAsync(null, null, false);
+
+            IsInitialized = true;
+            IsBusy = false;
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex);
+        }
+    }
+
+    /// <summary>
+    /// Helper method to select the best color for a plot status.
+    /// </summary>
+    /// <param name="plot"></param>
+    /// <returns></returns>
+    MudBlazor.Color GetPlotStatusColor(PlotSummary plot)
+    {
+        switch(plot.Status)
+        {
+            case PlotStatusType.Completed:
+                return Color.Success;
+            case PlotStatusType.InProgress:
+                return Color.Warning;
+            default:
+                return Color.Default;
+        }
+    }
+
+    /// <summary>
+    /// Helper method to look up a vendor name.
+    /// </summary>
+    /// <param name="vendorId"></param>
+    /// <returns></returns>
+    string? GetVendorName(Guid vendorId)
+    {
+        return model?.Vendors?.Find(v => v.VendorId == vendorId)?.Info.Name;
+    }
+
+    /// <summary>
+    /// Filter for dashboard data and display the results.
+    /// </summary>
+    /// <returns></returns>
+    async Task SearchAsync()
+    {
+        try
+        {
+            model.Data = await AdminContext.Client.GetDashboardDataAsync(
+                model.SelectedVendor?.VendorId,
+                model.SelectedProject?.ProjectId,
+                model.Year, 
+                model.StartDate, model.EndDate);
+
+            metricsValues = new double[] 
+            { 
+                model.Data.PlotStatus.Completed, 
+                model.Data.PlotStatus.InProgress, 
+                model.Data.PlotStatus.NotStarted 
+            };
+            metricsLabels = new string[] 
+            { 
+                $"{Localizer["General_Completed"]} ({metricsValues[0]})", 
+                $"{Localizer["General_InProgress"]} ({metricsValues[1]})",
+                $"{Localizer["General_NotStarted"]} ({metricsValues[2]})",
+            };
+
+            activitySeries = new List<ChartSeries>
+            {
+                new ChartSeries
+                {
+                    Name = "Completed",
+                    Data = model.Data?.MonthlyActivity?.Select(a => a.Value).ToArray()
+                }
+            };
+            activityLabels = model.Data?.MonthlyActivity?.Select(a => a.Label + "   ").ToArray();
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex);
+        }
+    }
+
+    async Task DownloadPlotsAsync()
+    {
+        try
+        {
+            IsBusy = true;
+
+            var parameters = new List<string>();
+            if (model.SelectedVendor != null)
+            {
+                parameters.Add($"vendorId={WebUtility.UrlEncode(model.SelectedVendor.VendorId.ToString())}");
+            }
+            if (model.SelectedProject != null)
+            {
+                parameters.Add($"projectId={WebUtility.UrlEncode(model.SelectedProject.ProjectId.ToString())}");
+            }
+            if (model.Year != null)
+            {
+                parameters.Add($"year={WebUtility.UrlEncode(model.Year.ToString())}");
+            }
+            if (model.StartDate != null)
+            {
+                parameters.Add($"startDate={WebUtility.UrlEncode(model.StartDate.ToString())}");
+            }
+            if (model.EndDate != null)
+            {
+                parameters.Add($"endDate={WebUtility.UrlEncode(model.EndDate.ToString())}");
+            }
+
+            var relativePath = $"/api/Admin/dashboard/csv";
+            if (parameters.Count > 0)
+            {
+                relativePath += "?" + string.Join("&", parameters);
+            }
+
+            var fileStream = await downloadHelper.DownloadAsync(HttpMethod.Get, relativePath);
+            var fileName = "plot-summary.csv";
+
+            IsBusy = false;
+
+            using var streamRef = new DotNetStreamReference(stream: fileStream);
+            await JsRuntime.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex);
+        }
+    }
+
+    public class DashboardModel
+    {
+        public DashboardData? Data { get; set; }
+        public VendorModel? SelectedVendor { get; set; }
+        public ProjectModel? SelectedProject { get; set; }
+        public List<VendorModel>? Vendors { get; set; }
+        public List<ProjectModel>? Projects { get; set; }
+        public int? Year { get; set; } = DateTime.UtcNow.Year;
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+    }
+}
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="eLiDAR.Views.PlotDetailsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:eLiDAR.Views"
+    Title="{Binding PlotTitle}"
+    BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.BackgroundColor="{DynamicResource backgroundColor}"
+    Shell.ForegroundColor="{StaticResource cerulean}"
+    Shell.TitleColor="{StaticResource cerulean}">
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="12">
+            <local:PlotView />
+            <Button
+                Style="{StaticResource FormButtonStyle }"
+                Command="{Binding ValidateCommand}"
+                Text="Validate"
+                />  
+            <Button
+                Style="{StaticResource FormButtonStyle }"
+                Command="{Binding DeletePlotCommand}"
+                IsEnabled="{Binding AllowPlotDeletion}"
+                Text="Delete"
+                 />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

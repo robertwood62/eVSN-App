@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="eLiDAR.Views.SoilView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ContentView.Content>
+        <Grid Padding="5" ColumnSpacing=" 1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+               
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.Row="0" Grid.Column="0">
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextTitle}"
+                    Text="Soil Attributes" />
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Layer Number" />
+                <Entry
+                    x:Name="txtLayer"
+                    HorizontalOptions="FillAndExpand"
+                    Keyboard="Numeric"
+                    Placeholder="Layer"
+                    Style="{DynamicResource TextSubheadEntry}"
+                    Text="{Binding LAYER}" />
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="From (cm)" />
+                <Entry
+                    x:Name="txtFrom"
+                    HorizontalOptions="FillAndExpand"
+                    Keyboard="Numeric"
+                    Placeholder="From"
+                    Style="{DynamicResource TextSubheadEntry}"
+                    Text="{Binding FROM}" />
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="To (cm) (999 can represent the bottom of the pit)" />
+                <Entry
+                    x:Name="txtTo"
+                    HorizontalOptions="FillAndExpand"
+                    Keyboard="Numeric"
+                    Placeholder="To"
+                    Style="{DynamicResource TextSubheadEntry}"
+                    Text="{Binding TO}" />
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Horizon" />
+                <Button
+                    Style="{StaticResource FormButtonStyle }"
+                    Command="{Binding SoilHorizonCommand}"
+                    Text="{Binding HorizonButton}"/>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Decompostion Code" />
+                <Picker
+                    x:Name="txtvonpost"
+                    Title="Decomposition Code"
+                    HorizontalOptions="FillAndExpand"
+                    SelectedItem="{Binding VON_POST, Mode=TwoWay}"
+                    Style="{DynamicResource TextSubheadPicker}"
+                    IsEnabled="{Binding IsOrganic}"
+                    TitleColor="{StaticResource AccentColor}">
+                    <Picker.Items>
+                        <x:String>Of1</x:String>
+                        <x:String>Of2</x:String>
+                        <x:String>Of3</x:String>
+                        <x:String>Of4</x:String>
+                        <x:String>Om5</x:String>
+                        <x:String>Om6</x:String>
+                        <x:String>Oh7</x:String>
+                        <x:String>Oh8</x:String>
+                        <x:String>Oh9</x:String>
+                        <x:String>Oh10</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Mineral Texture" />
+                <Button
+                    Style="{StaticResource FormButtonStyle }"
+                    Command="{Binding TextureCommand}"
+                    Text="{Binding TextureButton}" 
+                    IsEnabled="{Binding IsNotOrganic}"/>
+                <!--            <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Mineral Texture" />
+                <Picker
+                    x:Name="txttexture"
+                    Title="Mineral Texture"
+                    HorizontalOptions="FillAndExpand"
+                    SelectedItem="{Binding TEXTURE, Mode=TwoWay}"
+                    Style="{DynamicResource TextSubhead}"
+                    TitleColor="{StaticResource AccentColor}">
+                    <Picker.Items>
+                        <x:String>vcS</x:String>
+                        <x:String>cS</x:String>
+                        <x:String>mS</x:String>
+                        <x:String>fS</x:String>
+                        <x:String>vfS</x:String>
+                        <x:String>LvcS</x:String>
+                        <x:String>LcS</x:String>
+                        <x:String>LmS</x:String>
+                        <x:String>LfS</x:String>
+                        <x:String>LvfS</x:String>
+                        <x:String>SivcS</x:String>
+                        <x:String>SicS</x:String>
+                        <x:String>SimS</x:String>
+                        <x:String>SifS</x:String>
+                        <x:String>SivfS</x:String>
+                        <x:String>vcSL</x:String>
+                        <x:String>cSL</x:String>
+                        <x:String>mSL</x:String>
+                        <x:String>fSL</x:String>
+                        <x:String>vfSL</x:String>
+                        <x:String>L</x:String>
+                        <x:String>SiL</x:String>
+                        <x:String>Si</x:String>
+                        <x:String>CL</x:String>
+                        <x:String>SiCL</x:String>
+                        <x:String>SCL</x:String>
+                        <x:String>SC</x:String>
+                        <x:String>SiC</x:String>
+                        <x:String>C</x:String>
+                    </Picker.Items>
+                </Picker>  -->
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Pore Pattern (updates based on Mineral Texture)" />
+                <Picker
+                    x:Name="txtPorePattern"
+                    Title="Pore Pattern"
+                    HorizontalOptions="FillAndExpand"
+                    ItemDisplayBinding="{Binding NAME}"
+                    ItemsSource="{Binding ListPorePattern}"
+                    SelectedItem="{Binding SelectedPorePattern, Mode=TwoWay}"
+                    Style="{DynamicResource TextSubheadPicker}"
+                    TitleColor="{StaticResource AccentColor}"
+                    IsEnabled="{Binding IsNotOrganic}"/>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Percent Gravel" />
+                <Entry
+                    x:Name="txtPercentGravel"
+                    HorizontalOptions="FillAndExpand"
+                    Keyboard="Numeric"
+                    Placeholder="Percent Gravel"
+                    Style="{DynamicResource TextSubheadEntry}"
+                    Text="{Binding PERCENT_GRAVEL}"
+                    IsEnabled="{Binding IsNotOrganic}"/>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Percent COBBLE" />
+                <Entry
+                    x:Name="txtPercentCobble"
+                    HorizontalOptions="FillAndExpand"
+                    Keyboard="Numeric"
+                    Placeholder="Percent Cobble"
+                    Style="{DynamicResource TextSubheadEntry}"
+                    Text="{Binding PERCENT_COBBLE}"
+                    IsEnabled="{Binding IsNotOrganic}"/>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Percent Stone" />
+                <Entry
+                    x:Name="txtPercentStone"
+                    HorizontalOptions="FillAndExpand"
+                    Keyboard="Numeric"
+                    Placeholder="Percent Stone"
+                    Style="{DynamicResource TextSubheadEntry}"
+                    Text="{Binding PERCENT_STONE}" 
+                    IsEnabled="{Binding IsNotOrganic}"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column=" 1">
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextTitle}"
+                    Text="Soil Attributes Continued" />
+              
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Structure" />
+                <Button
+                    Style="{StaticResource FormButtonStyle }"
+                    Command="{Binding SoilStructureCommand}"
+                    Text="{Binding StructureButton}"
+                    IsEnabled="{Binding IsNotOrganic}"/>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Matrix Colour" />
+                <Button
+                    Style="{StaticResource FormButtonStyle }"
+                    Command="{Binding ColourCommand}"
+                    Text="{Binding ColourButton}"
+                    IsEnabled="{Binding IsNotOrganic}"/>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Mottle Colour" />
+                <Button
+                    Style="{StaticResource FormButtonStyle }"
+                    Command="{Binding MottleColourCommand}"
+                    Text="{Binding MottleColourButton}"
+                    IsEnabled="{Binding IsNotOrganic}"/>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextBody}"
+                    Text="Gley Colour" />
+                <Button
+                    Style="{StaticResource FormButtonStyle }"
+                    Command="{Binding GleyColourCommand}"
+                    Text="{Binding GleyColourButton}"
+                    IsEnabled="{Binding IsNotOrganic}"/>
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource TextError}"
+                    Text="{Binding ERRORMSG}"/>
+            </StackLayout>
+
+           
+        </Grid>
+    </ContentView.Content>
+</ContentView>
