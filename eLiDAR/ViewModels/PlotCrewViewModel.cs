@@ -7,6 +7,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using eLiDAR.Utilities;
 using System;
+using eLiDAR.Validator;
+using FluentValidation.Results;
+using System.Threading.Tasks;
 
 namespace eLiDAR.ViewModels {
     public class PlotCrewViewModel : INotifyPropertyChanged
@@ -15,6 +18,9 @@ namespace eLiDAR.ViewModels {
         public PLOT _plot;
         public PlotRepository _plotRepository;
         public List<PickerItemsString> ListPerson { get; set; }
+        public Command OnAppearingCommand { get; set; }
+        public Command OnDisappearingCommand { get; set; }
+        private bool _AllowToLeave = false;
 
         public PlotCrewViewModel(INavigation navigation, PLOT _thisplot)
         {
@@ -31,7 +37,7 @@ namespace eLiDAR.ViewModels {
                 if (_plot.DOWNWOODYDEBRISDATE == System.DateTime.MinValue) { _plot.DOWNWOODYDEBRISDATE = System.DateTime.Now; }
                 if (_plot.UNDERSTORYVEGETATIONDATE == System.DateTime.MinValue) { _plot.UNDERSTORYVEGETATIONDATE = System.DateTime.Now; }
                 if (_plot.UNDERSTORYCENSUSDATE == System.DateTime.MinValue) { _plot.UNDERSTORYCENSUSDATE = System.DateTime.Now; }
-                if (_plot.AGEDATE  == System.DateTime.MinValue) { _plot.AGEDATE = System.DateTime.Now; }
+                if (_plot.AGEDATE  == System.DateTime.MinValue) { _plot.AGEDATE = System.DateTime.Now; IsChanged = true; }
                 if (_plot.UNDERSTORYVEGETATIONAREA == 0) { _plot.UNDERSTORYVEGETATIONAREA = Constants.DefaultUnderstoryVegArea; }
                 if (_plot.SMALLTREESHRUBAREA == 0) { _plot.SMALLTREESHRUBAREA = Constants.DefaultSmallTreeArea; }
                 if (_plot.LINELENGTH1 == 0 && _plot.VSNPLOTTYPECODE.Contains("C")) { _plot.LINELENGTH1 = Constants.DefaultDWDLineLength; }
@@ -50,6 +56,17 @@ namespace eLiDAR.ViewModels {
             catch (System.Exception ex)
             {
                 var msg = ex.Message;
+            }
+        }
+
+        private bool _ischanged = false;
+        private bool IsChanged
+        {
+            get => _ischanged;
+            set
+            {
+                _ischanged = value;
+                NotifyPropertyChanged("IsChanged");
             }
         }
 
@@ -83,6 +100,8 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedDeformityPerson, value);
                 _plot.DEFORMITYPERSON = _selectedDeformityPerson.ID;
+                NotifyPropertyChanged("DEFORMITYPERSON");
+                IsChanged = true;
             }
         }
         private PickerItemsString _selectedDWDPerson = new PickerItemsString { ID = "", NAME = "" };
@@ -97,6 +116,8 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedDWDPerson, value);
                 _plot.DOWNWOODYDEBRISPERSON = _selectedDWDPerson.ID;
+                NotifyPropertyChanged("DOWNWOODYDEBRISPERSON");
+                IsChanged = true;
             }
         }
         private PickerItemsString _selectedUnderstoryVegPerson = new PickerItemsString { ID = "", NAME = "" };
@@ -111,6 +132,8 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedUnderstoryVegPerson, value);
                 _plot.UNDERSTORYVEGETATIONPERSON = _selectedUnderstoryVegPerson.ID;
+                NotifyPropertyChanged("UNDERSTORYVEGETATIONPERSON");
+                IsChanged = true;
             }
         }
         private PickerItemsString _selectedAgePerson = new PickerItemsString { ID = "", NAME = "" };
@@ -125,6 +148,8 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedAgePerson, value);
                 _plot.AGEPERSON = _selectedAgePerson.ID;
+                NotifyPropertyChanged("AGEPERSON");
+                IsChanged = true;
             }
         }
         private PickerItemsString _selectedStemMappingPerson = new PickerItemsString { ID = "", NAME = "" };
@@ -139,6 +164,8 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedStemMappingPerson, value);
                 _plot.STEMMAPPINGPERSON = _selectedStemMappingPerson.ID;
+                NotifyPropertyChanged("STEMMAPPINGPERSON");
+                IsChanged = true;
             }
         }
         private PickerItemsString _selectedUnderstoryCensusPerson = new PickerItemsString { ID = "", NAME = "" };
@@ -153,6 +180,8 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedUnderstoryCensusPerson, value);
                 _plot.UNDERSTORYCENSUSPERSON = _selectedUnderstoryCensusPerson.ID;
+                NotifyPropertyChanged("UNDERSTORYCENSUSPERSON");
+                IsChanged = true;
             }
         }
 
@@ -168,6 +197,8 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedSmallTreePerson, value);
                 _plot.SMALLTREEPERSON = _selectedSmallTreePerson.ID;
+                NotifyPropertyChanged("SMALLTREEPERSON");
+                IsChanged = true;
             }
         }
         public int SMALLTREESHRUBAREA
@@ -177,7 +208,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.SMALLTREESHRUBAREA = value;
                 NotifyPropertyChanged("SMALLTREESHRUBAREA");
-
+                IsChanged = true;
             }
         }
 
@@ -188,7 +219,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.SMALLTREESHRUBDATE = value;
                 NotifyPropertyChanged("SMALLTREESHRUBDATE");
-
+                IsChanged = true;
             }
         }
 
@@ -216,7 +247,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.SMALLTREESHRUBNOTE = value;
                 NotifyPropertyChanged("SMALLTREESHRUBNOTE");
-        
+                IsChanged = true;
             }
         }
         public double LINELENGTH1
@@ -226,7 +257,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.LINELENGTH1 = value;
                 NotifyPropertyChanged("LINELENGTH1");
-
+                IsChanged = true;
             }
         }
         public double LINELENGTH2
@@ -236,7 +267,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.LINELENGTH2 = value;
                 NotifyPropertyChanged("LINELENGTH2");
-
+                IsChanged = true;
             }
         }
         public string SMALLTREEPERSON
@@ -246,7 +277,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.SMALLTREEPERSON = value;
                 NotifyPropertyChanged("SMALLTREEPERSON");
-     
+                IsChanged = true;
             }
         }
         public System.DateTime UNDERSTORYVEGETATIONDATE
@@ -256,7 +287,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.UNDERSTORYVEGETATIONDATE = value;
                 NotifyPropertyChanged("UNDERSTORYVEGETATIONDATE");
-             
+                IsChanged = true;
             }
         }
         public int UNDERSTORYVEGETATIONAREA
@@ -266,7 +297,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.UNDERSTORYVEGETATIONAREA = value;
                 NotifyPropertyChanged("UNDERSTORYVEGETATIONAREA");
-           
+                IsChanged = true;
             }
         }
 
@@ -277,7 +308,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.UNDERSTORYVEGETATIONNOTE = value;
                 NotifyPropertyChanged("UNDERSTORYVEGETATIONNOTE");
-           
+                IsChanged = true;
             }
         }
         public string UNDERSTORYVEGETATIONPERSON
@@ -287,7 +318,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.UNDERSTORYVEGETATIONPERSON = value;
                 NotifyPropertyChanged("UNDERSTORYVEGETATIONPERSON");
-                
+                IsChanged = true;
             }
         }
         public System.DateTime UNDERSTORYCENSUSDATE
@@ -297,7 +328,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.UNDERSTORYCENSUSDATE = value;
                 NotifyPropertyChanged("UNDERSTORYCENSUSDATE");
-           
+                IsChanged = true;
             }
         }
         public string UNDERSTORYCENSUSNOTE
@@ -307,7 +338,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.UNDERSTORYCENSUSNOTE = value;
                 NotifyPropertyChanged("UNDERSTORYCENSUSNOTE");
-  
+                IsChanged = true;
             }
         }
         public string UNDERSTORYCENSUSPERSON
@@ -317,7 +348,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.UNDERSTORYCENSUSPERSON = value;
                 NotifyPropertyChanged("UNDERSTORYCENSUSPERSON");
-                
+                IsChanged = true;
             }
         }
         public System.DateTime DOWNWOODYDEBRISDATE
@@ -327,7 +358,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.DOWNWOODYDEBRISDATE = value;
                 NotifyPropertyChanged("DOWNWOODYDEBRISDATE");
-       
+                IsChanged = true;
             }
         }
         public string DOWNWOODYDEBRISNOTE
@@ -337,7 +368,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.DOWNWOODYDEBRISNOTE = value;
                 NotifyPropertyChanged("DOWNWOODYDEBRISNOTE");
-           
+                IsChanged = true;
             }
         }
         public string DOWNWOODYDEBRISPERSON
@@ -347,7 +378,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.DOWNWOODYDEBRISPERSON = value;
                 NotifyPropertyChanged("DOWNWOODYDEBRISPERSON");
-            
+                IsChanged = true;
             }
         }
         public System.DateTime DEFORMITYDATE
@@ -357,7 +388,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.DEFORMITYDATE = value;
                 NotifyPropertyChanged("DEFORMITYDATE");
-           
+                IsChanged = true;
             }
         }
         public string DEFORMITYNOTE
@@ -367,7 +398,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.DEFORMITYNOTE = value;
                 NotifyPropertyChanged("DEFORMITYNOTE");
-             
+                IsChanged = true;
             }
         }
         public string DEFORMITYPERSON
@@ -377,7 +408,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.DEFORMITYPERSON = value;
                 NotifyPropertyChanged("DEFORMITYPERSON");
-           
+                IsChanged = true;
             }
         }
         public DateTime AGEDATE
@@ -385,9 +416,8 @@ namespace eLiDAR.ViewModels {
             get => _plot.AGEDATE;
             set
             {
-                _plot.AGEDATE = value;
+                _plot.AGEDATE = value; IsChanged = true;
                 NotifyPropertyChanged("AGEDATE");
-               
             }
         }
         public string AGENOTE
@@ -397,7 +427,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.AGENOTE = value;
                 NotifyPropertyChanged("AGENOTE");
-                
+                IsChanged = true;
             }
         }
 
@@ -406,9 +436,8 @@ namespace eLiDAR.ViewModels {
             get => _plot.AGEPERSON;
             set
             {
-                _plot.AGEPERSON = value;
+                _plot.AGEPERSON = value; IsChanged = true;
                 NotifyPropertyChanged("AGEPERSON");
-                
             }
         }
 
@@ -419,7 +448,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.STEMMAPPINGDATE = value;
                 NotifyPropertyChanged("STEMMAPPINGDATE");
-              
+                IsChanged = true;
             }
         }
         public string STEMMAPPINGNOTE
@@ -429,7 +458,7 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.STEMMAPPINGNOTE = value;
                 NotifyPropertyChanged("STEMMAPPINGNOTE");
-               
+                IsChanged = true;
             }
         }
 
@@ -440,12 +469,87 @@ namespace eLiDAR.ViewModels {
             {
                 _plot.STEMMAPPINGPERSON = value;
                 NotifyPropertyChanged("STEMMAPPINGPERSON");
-               
+                IsChanged = true;
             }
         }
 
+        private void OnAppearing()
+        {
+            _AllowToLeave = false;
+            Shell.Current.Navigating += Current_Navigating;
+        }
+        private void OnDisappearing()
+        {
+            Shell.Current.Navigating -= Current_Navigating;
+        }
+        private async void Current_Navigating(object sender, ShellNavigatingEventArgs e)
+        {
+            if (e.CanCancel)
+            {
+                if (!_AllowToLeave)
+                {
+                    e.Cancel();
+                    await GoBack();
+                }
+            }
+        }
 
+        public int ERRORCOUNT
+        {
+            get => _plot.ERRORCOUNT;
+            set
+            {
+                _plot.ERRORCOUNT = value;
+                NotifyPropertyChanged("ERRORCOUNT");
+                //   IsChanged = true;
+            }
+        }
+        public string ERRORMSG
+        {
+            get => _plot.ERRORMSG;
+            set
+            {
+                _plot.ERRORMSG = value;
+                NotifyPropertyChanged("ERRORMSG");
+                //    IsChanged = true;
+            }
+        }
 
+        private Task UpdatePlot()
+        {
+            _plot.LastModified = System.DateTime.UtcNow;
+            _plotRepository.UpdatePlot(_plot);
+            return Task.CompletedTask;
+
+        }
+        private async Task GoBack()
+        {
+            // display Alert for confirmation
+            if (IsChanged)
+            {
+                PlotValidator _Validator = new PlotValidator();
+                ValidationResult validationResults = _Validator.Validate(_plot);
+                _ = UpdatePlot();
+
+                if (validationResults.IsValid)
+                {
+                    Shell.Current.Navigating -= Current_Navigating;
+                    // await Shell.Current.GoToAsync("..", true);
+                    await _navigation.PopAsync(true);
+
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Update Plot", validationResults.Errors[0].ErrorMessage, "Ok");
+                }
+            }
+            else
+            {
+                Shell.Current.Navigating -= Current_Navigating;
+                //   await Shell.Current.GoToAsync("..", true);
+                await _navigation.PopAsync(true);
+            }
+        }
 
         #region INotifyPropertyChanged    
         public event PropertyChangedEventHandler PropertyChanged;

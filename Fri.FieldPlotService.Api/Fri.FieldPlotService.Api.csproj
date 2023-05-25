@@ -30,4 +30,8 @@
     <ProjectReference Include="..\Fri.FieldPlotService\Fri.FieldPlotService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
 </Project>

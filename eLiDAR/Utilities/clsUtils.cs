@@ -129,6 +129,17 @@ namespace eLiDAR.Utilities
                 Preferences.Set(nameof(EnvironmentName), value);
             }
         }
+        internal string CustomEnvironmentUrl
+        {
+            get
+            {
+                return Preferences.Get(nameof(CustomEnvironmentUrl), null);
+            }
+            set
+            {
+                Preferences.Set(nameof(CustomEnvironmentUrl), value);
+            }
+        }
         internal string LoginToken
         {
             get

@@ -114,5 +114,20 @@
         /// The VSN date format used (sortable format)
         /// </summary>
         public const string VsnDateFormat = "s";
+
+        /// <summary>
+        /// The VSN UTM Zone Field
+        /// </summary>
+        public const string VsnUtmZone = "UTMZONE";
+
+        /// <summary>
+        /// The VSN Easting field.
+        /// </summary>
+        public const string VsnEasting = "EASTING";
+
+        /// <summary>
+        /// The VSN Northing field.
+        /// </summary>
+        public const string VsnNorthing = "NORTHING";
     }
 }

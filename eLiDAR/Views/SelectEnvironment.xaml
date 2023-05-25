@@ -8,12 +8,14 @@
             Shell.TitleColor="{StaticResource cerulean}"
              x:Class="eLiDAR.Views.SelectEnvironment">
     <ContentPage.Content>
-        <Grid Padding="0,0,0,0"  >
-            <StackLayout MinimumHeightRequest="100" Orientation="Vertical" Padding="10,10,10,10" Margin="0,30,0,0">
-                <Label Text="Enviornments" Style="{DynamicResource TextTitle}" />
-                <Picker ItemDisplayBinding="{Binding Name}" ItemsSource="{Binding Environments}" SelectedItem="{Binding Environment}" />
-            </StackLayout>
-        </Grid>
+        <StackLayout MinimumHeightRequest="100" Orientation="Vertical" Padding="10,10,10,10" Margin="30,30,30,0">
+            <Label Text="Environments" Style="{DynamicResource TextTitle}" />
+            <Picker ItemDisplayBinding="{Binding Name}" ItemsSource="{Binding Environments}" SelectedItem="{Binding SelectedEnvironment}" />
+            <Label Text="Custom Server URL" Style="{DynamicResource TextTitle}" />
+            <Entry Style="{DynamicResource TextSubheadEntry}" Text="{Binding CustomServerUrl}" IsEnabled="{Binding IsCustom}" />
+            <Label Text="Example: https://server.com/" Style="{DynamicResource TextSmallCaption}" />
+            <Button Margin="0,30,0,0" Style="{StaticResource FormButtonStyle}" Text="Save Changes" Command="{Binding SaveCommand}" />
+        </StackLayout>
     </ContentPage.Content>
 
 </ContentPage>

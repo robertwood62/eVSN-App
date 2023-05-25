@@ -1,0 +1,66 @@
+# Build Pipeline for FRI Field App (API + Admin + App)
+
+trigger:
+- main
+
+pool:
+  vmImage: 'macOS-12'
+  demands:
+  - MSBuild
+
+variables:
+  project: '**/eVSN.iOS.csproj'
+  buildPlatform: 'AnyCPU'
+  buildConfiguration: 'Release'
+
+steps:
+
+- task: InstallAppleCertificate@2
+  displayName: 'Install an Apple certificate'
+  inputs:
+    certSecureFile: 'Apple eVSN Distribution Certificate.pfx'
+    certPwd: '$(appleDeveloperCertPassword)'
+    setUpPartitionIdACLForPrivateKey: false
+
+- task: InstallAppleProvisioningProfile@1
+  displayName: 'Install an Apple provisioning profile'
+  inputs:
+    provProfileSecureFile: 'Apple eVSN_Distribution_Profile.mobileprovision'
+
+- task: ios-bundle-version@1
+  inputs:
+    sourcePath: 'eLiDAR.iOS/Info.plist'
+    versionCodeOption: 'buildid'
+    versionCode: '$(Build.BuildId)'
+    printFile: true
+
+- task: MSBuild@1
+  inputs:
+    solution: '**/eVSN.csproj'
+    configuration: 'Release'
+    msbuildArguments: /t:restore
+- task: MSBuild@1
+  inputs:
+    solution: '$(project)'
+    configuration: 'Release'
+    msbuildArguments: /t:restore
+- task: XamariniOS@2
+  inputs:
+    solutionFile: '$(project)'
+    configuration: '$(buildConfiguration)'
+    runNugetRestore: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: |
+      **/*.app
+      **/*.ipa
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

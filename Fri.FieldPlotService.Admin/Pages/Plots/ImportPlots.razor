@@ -28,7 +28,10 @@
                         <PropertyColumn T="ImportPlotData" TProperty="string" Property="@(x => x.PlotName)" Title="Plot Name" IsEditable="true" />
                         <PropertyColumn T="ImportPlotData" TProperty="int?" Property="@(x => x.MeasureYear)" Title="Measure Year" IsEditable="true" />
                         <PropertyColumn T="ImportPlotData" TProperty="string" Property="@(x => x.PlotTypeCode)" Title="Plot Type Code" IsEditable="true" />
-                        <TemplateColumn T="ImportPlotData" Title="Actions" IsEditable="false" Context="plotContext">
+                        <PropertyColumn T="ImportPlotData" TProperty="int" Property="@(x => x.UtmZone)" Title="UTM" IsEditable="true" />
+                        <PropertyColumn T="ImportPlotData" TProperty="int" Property="@(x => x.Easting)" Title="Easting" IsEditable="true" />
+                        <PropertyColumn T="ImportPlotData" TProperty="int" Property="@(x => x.Northing)" Title="Northing" IsEditable="true" />
+                        <TemplateColumn T="ImportPlotData" Title="Actions" IsEditable="true" Context="plotContext">
                             <EditTemplate>
                                 <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => { model.Plots.Remove(plotContext.Item); StateHasChanged(); } )" />
                             </EditTemplate>

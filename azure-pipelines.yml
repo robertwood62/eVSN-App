@@ -1,0 +1,46 @@
+# Build Pipeline for FRI Field App (API + Admin + App)
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  dotNetFramework: 'net7.0'
+  dotNetVersion: '7.0.x'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Set .NET version'
+  inputs:
+    version: $(dotNetVersion)
+    includePreviewVersions: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build the Field Plot Service (API)'
+  inputs:
+    command: 'publish'
+    projects: '**/Fri.FieldPlotService.Api.csproj'
+    publishWebProjects: false
+    zipAfterPublish: true
+    arguments: '--configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/api'
+    modifyOutputPath: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build the Field Plot Admin Tool (Web)'
+  inputs:
+    command: 'publish'
+    projects: '*/Fri.FieldPlotService.Admin.csproj'
+    publishWebProjects: false
+    zipAfterPublish: true
+    modifyOutputPath: true
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/admin'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

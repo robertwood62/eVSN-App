@@ -1,0 +1,72 @@
+# Build Pipeline for FRI Field App (API + Admin + App)
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  project: '**/eVSN.Android.csproj'
+  buildPlatform: 'AnyCPU'
+  buildConfiguration: 'Release'
+  androidSigningKeyAlias: 'evsn'
+
+steps:
+
+- task: android-manifest-version@1
+  displayName: 'Bump the Android mainfest version with build ID'
+  inputs:
+    sourcePath: 'eLiDAR.Android/Properties/AndroidManifest.xml'
+    versionCodeOption: 'buildid'
+    versionCode: '$(Build.BuildId)'
+    printFile: true
+
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+
+#- task: VSBuild@1
+#  displayName: 'Build the Field App (Android)'
+#  inputs:
+#    platform: '$(buildPlatform)'
+#    solution: '$(project)'
+#    configuration: '$(buildConfiguration)'
+#    msbuildArgs: '/p:AndroidSignedStorePass="$(androidSignedStorePass)" /p:AndroidSignedKeyPass="$(androidSignedKeyPass)" /p:AndroidSigningKeyAlias="$(androidSigningKeyAlias)"'
+
+- task: XamarinAndroid@1
+  displayName: 'Build the field App (Android)'
+  inputs:
+    projectFile: '$(project)'
+    outputDirectory: '$(Build.ArtifactStagingDirectory)'
+    configuration: '$(buildConfiguration)'
+    msbuildArguments: '-t:SignAndroidPackage -p:AndroidPackageFormat=aab -p:AndroidKeyStore=True -p:AndroidSigningKeyStore="evsn.keystore" -p:AndroidSigningStorePass=$(androidSignedStorePass) -p:AndroidSigningKeyAlias=evsn -p:AndroidSigningKeyPass=$(androidSignedStorePass)'
+
+#- task: AndroidSigning@2
+#  inputs:
+#    apkFiles: '$(Build.ArtifactStagingDirectory)/*.aab'
+#    jarsign: true
+#    jarsignerKeystoreFile: evsn.keystore
+#    jarsignerKeystoreAlias: evsn
+#    jarsignerKeyPassword: '$(androidSignedStorePass)'
+#    jarsignerKeystorePassword: '$(androidSignedStorePass)'
+#    jarsignerArguments: '-sigalg SHA256withRSA -digestalg SHA-256'
+#    zipalign: false
+
+#- task: CopyFiles@2
+#  inputs:
+#    SourceFolder: '$(agent.builddirectory)'
+#    Contents: '**/*.apk'
+#    TargetFolder: '$(build.artifactstagingdirectory)'
+#    flattenFolders: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

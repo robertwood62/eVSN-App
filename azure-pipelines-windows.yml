@@ -1,0 +1,62 @@
+# Build Pipeline for FRI Field App (API + Admin + App)
+# Setup Process: https://learn.microsoft.com/en-us/windows/uwp/packaging/auto-build-package-uwp-apps
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/eVSN.sln'
+  project: '**/eVSN.UWP.csproj'
+  snProject: '**/SnInstallPfx.csproj'
+  buildPlatform: 'x86|x64|ARM'
+  buildConfiguration: 'Release'
+  dotNetFramework: 'net7.0'
+  dotNetVersion: '7.0.x'
+  appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Set .NET version'
+  inputs:
+    version: $(dotNetVersion)
+    includePreviewVersions: true
+
+- task: NuGetToolInstaller@1
+  displayName: 'Install NuGet (latest version)'
+
+- task: NuGetCommand@2
+  displayName: 'Restore all the nuget packages for the entire solution.'
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  displayName: 'Build the SnInstallPfx Tool to help deploy the UWP certifiate.'
+  inputs:
+    platform: 'x86'
+    solution: '$(snProject)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:OutDir="$(Build.ArtifactStagingDirectory)/tools"'
+
+- task: CmdLine@2
+  displayName: 'Install the certificate using the SnInstallPfx tool (just built)'
+  inputs:
+    script: |
+      "$(Build.ArtifactStagingDirectory)/tools/SnInstallPfx.exe" "eVSN.UWP\eVSN.UWP_TemporaryKey.pfx" $(AppxPackageCertificatePassword)
+
+- task: VSBuild@1
+  displayName: 'Build the Field App (UWP)'
+  inputs:
+    platform: 'x86'
+    solution: '$(project)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:PackageCertificatePassword="$(AppxPackageCertificatePassword)" /p:AppxPackageSigningEnabled=true /p:AppxBundlePlatforms="$(buildPlatform)" /p:AppxPackageDir="$(appxPackageDir)" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish all APPX files'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

@@ -72,6 +72,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedStandInfoPerson, value);
                 _plot.STANDINFOPERSON = _selectedStandInfoPerson.ID;
+                NotifyPropertyChanged("STANDINFOPERSON");
                 IsChanged = true;
             }
         }
@@ -90,6 +91,7 @@ namespace eLiDAR.ViewModels {
                 if (value == _selectedDisturbance1) { return; }
                 SetProperty(ref _selectedDisturbance1, value);
                 _plot.DISTURBANCECODE1  = (int)_selectedDisturbance1.ID;
+                NotifyPropertyChanged("DISTURBANCECODE1");
                 IsChanged = true;
                 //      OnPropertyChanged();
             }
@@ -109,6 +111,7 @@ namespace eLiDAR.ViewModels {
                 if (value == _selectedDisturbance2) { return; }
                 SetProperty(ref _selectedDisturbance2, value);
                 _plot.DISTURBANCECODE2 = (int)_selectedDisturbance2.ID;
+                NotifyPropertyChanged("DISTURBANCECODE2");
                 IsChanged = true;
                 //      OnPropertyChanged();
             }
@@ -128,6 +131,7 @@ namespace eLiDAR.ViewModels {
                     if (value == _selectedCanopyOrigin1) { return; }
                     SetProperty(ref _selectedCanopyOrigin1, value);
                     _plot.MAINCANOPYORIGINCODE1 = (int)_selectedCanopyOrigin1.ID;
+                    NotifyPropertyChanged("MAINCANOPYORIGINCODE1");
                     IsChanged = true;
                 }
                 catch (System.Exception e)
@@ -152,6 +156,8 @@ namespace eLiDAR.ViewModels {
                     if (value == _selectedCanopyOrigin2) { return; }
                     SetProperty(ref _selectedCanopyOrigin2, value);
                     _plot.MAINCANOPYORIGINCODE2 = (int)_selectedCanopyOrigin2.ID;
+                    NotifyPropertyChanged("MAINCANOPYORIGINCODE2");
+                    IsChanged = true;
                 }
                 catch (System.Exception e)
                 {
@@ -173,6 +179,7 @@ namespace eLiDAR.ViewModels {
                 if (value == null) { return; }
                 SetProperty(ref _selectedCanopyStructure1, value);
                 _plot.CANOPYSTRUCTURECODE1 = _selectedCanopyStructure1.ID;
+                NotifyPropertyChanged("CANOPYSTRUCTURECODE1");
                 IsChanged = true;
             }
         }
@@ -189,6 +196,7 @@ namespace eLiDAR.ViewModels {
                 if (value == null) { return; }
                 SetProperty(ref _selectedCanopyStructure2, value);
                 _plot.CANOPYSTRUCTURECODE2 = _selectedCanopyStructure2.ID;
+                NotifyPropertyChanged("CANOPYSTRUCTURECODE2");
                 IsChanged = true;
             }
         }
@@ -204,6 +212,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedMaturityClass1, value);
                 _plot.MATURITYCLASSCODE1 = _selectedMaturityClass1.ID;
+                NotifyPropertyChanged("MATURITYCLASSCODE1");
                 IsChanged = true;
             }
         }
@@ -219,6 +228,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedMaturityClass2, value);
                 _plot.MATURITYCLASSCODE2 = _selectedMaturityClass2.ID;
+                NotifyPropertyChanged("MATURITYCLASSCODE2");
                 IsChanged = true;
             }
         }
@@ -234,6 +244,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedMaturityClassRationale1, value);
                 _plot.MATURITYCLASSRATIONALE1 = _selectedMaturityClassRationale1.ID;
+                NotifyPropertyChanged("MATURITYCLASSRATIONALE1");
                 IsChanged = true;
             }
         }
@@ -249,6 +260,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedMaturityClassRationale2, value);
                 _plot.MATURITYCLASSRATIONALE2 = _selectedMaturityClassRationale2.ID;
+                NotifyPropertyChanged("MATURITYCLASSRATIONALE2");
                 IsChanged = true;
             }
         }
@@ -257,9 +269,9 @@ namespace eLiDAR.ViewModels {
             get => _plot.PERCENTAFFECTED;
             set
             {
-                _plot.PERCENTAFFECTED = value;
+                _plot.PERCENTAFFECTED = value; IsChanged = true;
                 NotifyPropertyChanged("PERCENTAFFECTED");
-                  IsChanged = true;
+
             }
         }
         public int PERCENTMORTALITY
@@ -267,7 +279,7 @@ namespace eLiDAR.ViewModels {
             get => _plot.PERCENTMORTALITY;
             set
             {
-                _plot.PERCENTMORTALITY = value;
+                _plot.PERCENTMORTALITY = value; IsChanged = true;
                 NotifyPropertyChanged("PERCENTMORTALITY");
                    IsChanged = true;
             }
@@ -277,7 +289,7 @@ namespace eLiDAR.ViewModels {
             get => _plot.STANDINFODATE;
             set
             {
-                _plot.STANDINFODATE = value;
+                _plot.STANDINFODATE = value; IsChanged = true;
                 NotifyPropertyChanged("STANDINFODATE");
               
             }
@@ -297,7 +309,7 @@ namespace eLiDAR.ViewModels {
             get => _plot.STANDINFONOTE;
             set
             {
-                _plot.STANDINFONOTE = value;
+                _plot.STANDINFONOTE = value; IsChanged = true;
                 NotifyPropertyChanged("STANDINFONOTE");
                
             }
@@ -307,7 +319,7 @@ namespace eLiDAR.ViewModels {
             get => _plot.MATURITYCLASSRATIONALE1;
             set
             {
-                _plot.MATURITYCLASSRATIONALE1 = value;
+                _plot.MATURITYCLASSRATIONALE1 = value; IsChanged = true;
                 NotifyPropertyChanged("MATURITYCLASSRATIONALE1");
                 
             }
@@ -317,7 +329,7 @@ namespace eLiDAR.ViewModels {
             get => _plot.MATURITYCLASSRATIONALE2;
             set
             {
-                _plot.MATURITYCLASSRATIONALE2 = value;
+                _plot.MATURITYCLASSRATIONALE2 = value; IsChanged = true;
                 NotifyPropertyChanged("MATURITYCLASSRATIONALE2");
             }
         }

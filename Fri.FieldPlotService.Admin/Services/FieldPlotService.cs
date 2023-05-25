@@ -3573,7 +3573,7 @@ namespace Fri.FieldPlotService.Admin.Services
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task InsertEntitiesAsync(string table, string user_token, System.Guid? user_device_id, string user_device_type, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, object>> body)
+        public virtual System.Threading.Tasks.Task InsertEntitiesAsync(string table, string user_token, System.Guid? user_device_id, string user_device_type, object body)
         {
             return InsertEntitiesAsync(table, user_token, user_device_id, user_device_type, body, System.Threading.CancellationToken.None);
         }
@@ -3584,7 +3584,7 @@ namespace Fri.FieldPlotService.Admin.Services
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task InsertEntitiesAsync(string table, string user_token, System.Guid? user_device_id, string user_device_type, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, object>> body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task InsertEntitiesAsync(string table, string user_token, System.Guid? user_device_id, string user_device_type, object body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Field/sync?");
@@ -3685,7 +3685,7 @@ namespace Fri.FieldPlotService.Admin.Services
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateEntitiesAsync(string table, string user_token, System.Guid? user_device_id, string user_device_type, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, object>> body)
+        public virtual System.Threading.Tasks.Task UpdateEntitiesAsync(string table, string user_token, System.Guid? user_device_id, string user_device_type, object body)
         {
             return UpdateEntitiesAsync(table, user_token, user_device_id, user_device_type, body, System.Threading.CancellationToken.None);
         }
@@ -3696,7 +3696,7 @@ namespace Fri.FieldPlotService.Admin.Services
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateEntitiesAsync(string table, string user_token, System.Guid? user_device_id, string user_device_type, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, object>> body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task UpdateEntitiesAsync(string table, string user_token, System.Guid? user_device_id, string user_device_type, object body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Field/sync?");
@@ -3986,6 +3986,15 @@ namespace Fri.FieldPlotService.Admin.Services
 
         [Newtonsoft.Json.JsonProperty("plotTypeCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string PlotTypeCode { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("utmZone", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int UtmZone { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("easting", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Easting { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("northing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Northing { get; set; }
 
     }
 

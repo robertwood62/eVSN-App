@@ -458,7 +458,7 @@ namespace eLiDAR.Validator
             RuleFor(c => c.VSNPLOTNAME).NotEmpty().WithMessage("Plot number must not be empty.");
             RuleFor(c => c.VSNPLOTTYPECODE).NotEmpty().WithMessage("Plot type must not be empty.");
             RuleFor(c => c.PLOTOVERVIEWDATE).GreaterThanOrEqualTo(DateTime.Parse("1/1/2022")).WithMessage("Plot date should > 01-01-2022.");
-            RuleFor(c => c.MEASURETYPECODE).NotEmpty().WithMessage("Measure type must not be empty.");
+            RuleFor(c => c.MEASURETYPECODE).NotEmpty().WithMessage("Measurement type must not be empty.");
             RuleFor(c => c.ACCESSCONDITIONCODE).NotEmpty().WithMessage("ACCESSCONDITIONCODE must not be empty.");
 
             if (DoFullvalidation)
@@ -489,16 +489,16 @@ namespace eLiDAR.Validator
                 });
 
 
-                RuleFor(c => c.FIELD_CREW1).NotEmpty().WithMessage("You must have at least one crew member in Field Crew 1 field in the Plot screen");
+                RuleFor(c => c.FIELD_CREW1).NotEmpty().WithMessage("You must have at least one crew member (Crew Member 1) in the Plot screen");
 
                 //tblStandInfoHeader & tblStandInfoSite
                 RuleFor(c => c.STANDINFODATE).GreaterThanOrEqualTo(DateTime.Parse("1/1/2022")).WithMessage("Stand Information date should > 01-01-2022.");
-                RuleFor(c => c.STANDINFOPERSON).NotEmpty().WithMessage("You must have at Stand information Person in the Stand Info screen");
+                RuleFor(c => c.STANDINFOPERSON).NotEmpty().WithMessage("You must have a Crew Lead in the Stand Info screen");
 
                 // RuleFor(c => c.SITERANK).Must(c => c >= 1 && c <= 2).WithMessage("Site Rank must be 1 or 2.");
                 // Site Rank is ignored - two ranks are collected in a flat table
                 RuleFor(c => c.CANOPYSTRUCTURECODE1).NotEmpty().WithMessage("Canopy Structure 1 should be filled out in the Stand Info Screen");
-                RuleFor(c => c.MAINCANOPYORIGINCODE1).NotEmpty().WithMessage("Main Canopy Origin 1 should be filled out in the Stand Info Screen");
+                RuleFor(c => c.MAINCANOPYORIGINCODE1).NotEmpty().WithMessage("Canopy Origin 1 should be filled out in the Stand Info Screen");
                 RuleFor(c => c.MATURITYCLASSCODE1).NotEmpty().WithMessage("Maturity Class Code 1 should be filled out in the Stand Info Screen");
 
                 // tblStandInfoDisturbance

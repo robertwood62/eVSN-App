@@ -23,6 +23,12 @@ namespace eLiDAR.API
             Name = name;
             BaseUrl = baseUrl;
             IsDefault = isDefault;
+
+            if(BaseUrl == null)
+            {
+                var util = new Utils();
+                BaseUrl = util.CustomEnvironmentUrl;
+            }
         }
 
         /// <summary>
@@ -46,19 +52,22 @@ namespace eLiDAR.API
     /// </summary>
     public class EnvironmentSelector
     {
+        public const string CustomEnvironmentName = "Custom";
+
         /// <summary>
         /// List of all the current environments.
         /// </summary>
-        readonly static public EnvironmentConfig[] Environments = new EnvironmentConfig[]
+        public readonly static EnvironmentConfig[] Environments = new EnvironmentConfig[]
         {
 #if DEBUG
-            new EnvironmentConfig("Development", "https://dev-fri-field-app-service-api.azurewebsites.net/", true),
+            new EnvironmentConfig("Development", "https://dev-fri-partners-api.azurewebsites.net/", true),
             new EnvironmentConfig("Local", "https://localhost:7133/"),
-            new EnvironmentConfig("Production", "https://beta-fri-field-app-service-api.azurewebsites.net/"),
+            new EnvironmentConfig("Production", "https://beta-fri-partners-api.azurewebsites.net/"),
 #else
-            new EnvironmentConfig("Production", "https://beta-fri-field-app-service-api.azurewebsites.net/", true),
-            new EnvironmentConfig("Development", "https://dev-fri-field-app-service-api.azurewebsites.net/", false),
+            new EnvironmentConfig("Production", "https://beta-fri-partners-api.azurewebsites.net/", true),
+            new EnvironmentConfig("Development", "https://dev-fri-partners-api.azurewebsites.net/", false),
 #endif
+            new EnvironmentConfig(CustomEnvironmentName, null)
         };
 
         /// <summary>
@@ -95,6 +104,28 @@ namespace eLiDAR.API
                 {
                     EnvironmentName = environment.Name
                 };
+            }
+        }
+
+        /// <summary>
+        /// Set's the custom environment URL to use.  If a blank string is used, the custom option won't be available.
+        /// </summary>
+        /// <param name="serverUrl"></param>
+        public static void SetCustomEnvironment(string serverUrl)
+        {
+            // Update the preferences.
+            var util = new Utils
+            {
+                CustomEnvironmentUrl = serverUrl
+            };
+
+            // Update the current in-memory environment setting.
+            foreach(var environment in  Environments)
+            {
+                if(environment.Name == CustomEnvironmentName)
+                {
+                    environment.BaseUrl = serverUrl;
+                }
             }
         }
     }

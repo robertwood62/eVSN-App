@@ -466,7 +466,7 @@ namespace Fri.FieldPlotService.Api.Controllers
         [HttpPost]
         [Route("plots/import")]
         [Authorize(Roles = Constants.AdminRole)]
-        public async Task<IActionResult> ImportVsnPlotsAsync([FromQuery] Guid vendorId, [FromQuery] Guid projectId, [FromBody] List<ImportPlotData>? plotList)
+        public async Task<IActionResult> ImportVsnPlotsAsync([FromQuery] Guid vendorId, [FromQuery] Guid projectId, [FromBody] List<ImportPlotData> plotList)
         {
             try
             {

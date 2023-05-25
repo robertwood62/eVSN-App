@@ -45,6 +45,8 @@ namespace eLiDAR.ViewModels
             set
             {
                 _ischanged = value;
+                NotifyPropertyChanged("IsChanged");
+
                 PlotValidator _fullvalidator = new PlotValidator(true);
                 ValidationResult fullvalidationResults = _fullvalidator.Validate(_plot);
                 ParseValidater _parser = new ParseValidater();
@@ -62,7 +64,7 @@ namespace eLiDAR.ViewModels
                     IsValid = false;
                 } 
 
-                NotifyPropertyChanged("IsChanged");
+
             }
         }
 
@@ -105,13 +107,9 @@ namespace eLiDAR.ViewModels
             get => _plot.VSNPLOTTYPECODE;
             set
             {
-                if (_plot.VSNPLOTTYPECODE != value) 
-                {
-                    IsChanged = true; 
-                }
+                if (_plot.VSNPLOTTYPECODE != value ) { _plot.VSNPLOTTYPECODE = value; IsChanged = true; }
                 _plot.VSNPLOTTYPECODE = value;
                 NotifyPropertyChanged("PLOT_TYPE");
-            
             }
         }
 
@@ -121,9 +119,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.VSNPLOTNAME.Equals(value)) { _plot.VSNPLOTNAME = value; IsChanged = true; }
-
                 NotifyPropertyChanged("PLOTNUM");
-               
             }
         }
         public string MEASURETYPECODE
@@ -132,9 +128,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.MEASURETYPECODE.Equals(value)) { _plot.MEASURETYPECODE = value; IsChanged = true; }
-
                 NotifyPropertyChanged("MEASURETYPECODE");
-               
             }
         }
         public int NONSTANDARDTYPECODE
@@ -142,21 +136,17 @@ namespace eLiDAR.ViewModels
             get => _plot.NONSTANDARDTYPECODE ;
             set
             {
-                if (!_plot.NONSTANDARDTYPECODE.Equals(value)) { IsChanged = true; }
-                _plot.NONSTANDARDTYPECODE = value;
+                if (!_plot.NONSTANDARDTYPECODE.Equals(value)) { _plot.NONSTANDARDTYPECODE = value; IsChanged = true; }
                 NotifyPropertyChanged("NONSTANDARDTYPECODE");
-      
             }
-        }
+        }   
         public int GROWTHPLOTNUMBER
         {
             get => _plot.GROWTHPLOTNUMBER;
             set
             {
                 if (!_plot.GROWTHPLOTNUMBER.Equals(value)) { _plot.GROWTHPLOTNUMBER = value; IsChanged = true; }
-
                 NotifyPropertyChanged("GROWTHPLOTNUMBER");
-           
             }
         }
         public string EXISTINGPLOTNAME
@@ -165,9 +155,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (_plot.EXISTINGPLOTNAME != value) { _plot.EXISTINGPLOTNAME = value; IsChanged = true; }
- 
                 NotifyPropertyChanged("EXISTINGPLOTNAME");
-             
             }
         }
         public string EXISTINGPLOTTYPECODE
@@ -175,8 +163,7 @@ namespace eLiDAR.ViewModels
             get => _plot.EXISTINGPLOTTYPECODE;
             set
             {
-                if (!_plot.EXISTINGPLOTTYPECODE.Equals(value)) { IsChanged = true; }
-                _plot.EXISTINGPLOTTYPECODE = value;
+                if (!_plot.EXISTINGPLOTTYPECODE.Equals(value)) { _plot.EXISTINGPLOTTYPECODE = value; IsChanged = true; }
                 NotifyPropertyChanged("EXISTINGPLOTTYPECODE");
        
             }
@@ -187,9 +174,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.DISTANCETARGETMOVED.Equals(value)) { _plot.DISTANCETARGETMOVED = value; IsChanged = true; }
-
                 NotifyPropertyChanged("DISTANCETARGETMOVED");
-             
             }
         }
         public int AZIMUTHTARGETMOVED
@@ -198,9 +183,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.AZIMUTHTARGETMOVED.Equals(value)) { _plot.AZIMUTHTARGETMOVED = value; IsChanged = true; }
-
                 NotifyPropertyChanged("AZIMUTHTARGETMOVED");
-              
             }
         }
 
@@ -242,8 +225,8 @@ namespace eLiDAR.ViewModels
             get => _plot.MEASURETYPECODE;
             set
             {
-                if (!_plot.MEASURETYPECODE.Equals(value)) { IsChanged = true; }
-                _plot.MEASURETYPECODE = value;
+                if (!_plot.MEASURETYPECODE.Equals(value)) { _plot.MEASURETYPECODE = value; IsChanged = true; }
+
                 NotifyPropertyChanged("MEASUREMENT_TYPE");
   
             }
@@ -254,10 +237,8 @@ namespace eLiDAR.ViewModels
             get => _plot.LEAD_SPP;
             set
             {
-                if (!_plot.LEAD_SPP.Equals(value)) { IsChanged = true; }
-                _plot.LEAD_SPP = value;
+                if (!_plot.LEAD_SPP.Equals(value)) { _plot.LEAD_SPP = value; IsChanged = true; }
                 NotifyPropertyChanged("LEAD_SPP");
-          
             }
         }
 
@@ -266,10 +247,8 @@ namespace eLiDAR.ViewModels
             get => _plot.MAINCANOPYORIGINCODE1;
             set
             {
-                if (!_plot.MAINCANOPYORIGINCODE1.Equals(value)) { IsChanged = true; }
-                _plot.MAINCANOPYORIGINCODE1 = value;
+                if (!_plot.MAINCANOPYORIGINCODE1.Equals(value)) { _plot.MAINCANOPYORIGINCODE1 = value; IsChanged = true; }
                 NotifyPropertyChanged("MAINCANOPYORIGINCODE1");
-
             }
         }
         public int MAINCANOPYORIGINCODE2
@@ -277,10 +256,8 @@ namespace eLiDAR.ViewModels
             get => _plot.MAINCANOPYORIGINCODE2;
             set
             {
-                if (!_plot.MAINCANOPYORIGINCODE2.Equals(value)) { IsChanged = true; }
-                _plot.MAINCANOPYORIGINCODE2 = value;
+                if (!_plot.MAINCANOPYORIGINCODE2.Equals(value)) { _plot.MAINCANOPYORIGINCODE2 = value; IsChanged = true; }
                 NotifyPropertyChanged("MAINCANOPYORIGINCODE2");
-
             }
         }
 
@@ -289,10 +266,8 @@ namespace eLiDAR.ViewModels
             get => _plot.CANOPYSTRUCTURECODE1;
             set
             {
-                if (!_plot.CANOPYSTRUCTURECODE1.Equals(value)) { IsChanged = true; }
-                _plot.CANOPYSTRUCTURECODE1 = value;
+                if (!_plot.CANOPYSTRUCTURECODE1.Equals(value)) { _plot.CANOPYSTRUCTURECODE1 = value; IsChanged = true; }
                 NotifyPropertyChanged("CANOPYSTRUCTURECODE1");
-              
             }
         }
 
@@ -301,10 +276,8 @@ namespace eLiDAR.ViewModels
             get => _plot.CANOPYSTRUCTURECODE2;
             set
             {
-                if (!_plot.CANOPYSTRUCTURECODE2.Equals(value)) { IsChanged = true; }
-                _plot.CANOPYSTRUCTURECODE2 = value;
+                if (!_plot.CANOPYSTRUCTURECODE2.Equals(value)) { _plot.CANOPYSTRUCTURECODE2 = value; IsChanged = true; }
                 NotifyPropertyChanged("CANOPYSTRUCTURECODE2");
-
             }
         }
 
@@ -313,10 +286,8 @@ namespace eLiDAR.ViewModels
             get => _plot.MATURITYCLASSCODE1;
             set
             {
-                if (!_plot.MATURITYCLASSCODE1.Equals(value)) { IsChanged = true; }
-                _plot.MATURITYCLASSCODE1 = value;
+                if (!_plot.MATURITYCLASSCODE1.Equals(value)) { _plot.MATURITYCLASSCODE1 = value; IsChanged = true; }
                 NotifyPropertyChanged("MATURITYCLASSCODE1");
-       
             }
         }
 
@@ -325,10 +296,8 @@ namespace eLiDAR.ViewModels
             get => _plot.MATURITYCLASSRATIONALE1;
             set
             {
-                if (!_plot.MATURITYCLASSRATIONALE1.Equals(value)) { IsChanged = true; }
-                _plot.MATURITYCLASSRATIONALE1 = value;
+                if (!_plot.MATURITYCLASSRATIONALE1.Equals(value)) { _plot.MATURITYCLASSRATIONALE1 = value; IsChanged = true; }
                 NotifyPropertyChanged("MATURITYCLASSRATIONALE1");
-       
             }
         }
         public string MATURITYCLASSCODE2
@@ -336,10 +305,8 @@ namespace eLiDAR.ViewModels
             get => _plot.MATURITYCLASSCODE2;
             set
             {
-                if (!_plot.MATURITYCLASSCODE2.Equals(value)) { IsChanged = true; }
-                _plot.MATURITYCLASSCODE2 = value;
+                if (!_plot.MATURITYCLASSCODE2.Equals(value)) { _plot.MATURITYCLASSCODE2 = value; IsChanged = true; }
                 NotifyPropertyChanged("MATURITYCLASSCODE2");
-
             }
         }
 
@@ -348,8 +315,7 @@ namespace eLiDAR.ViewModels
             get => _plot.MATURITYCLASSRATIONALE2;
             set
             {
-                if (!_plot.MATURITYCLASSRATIONALE2.Equals(value)) { IsChanged = true; }
-                _plot.MATURITYCLASSRATIONALE2 = value;
+                if (!_plot.MATURITYCLASSRATIONALE2.Equals(value)) { _plot.MATURITYCLASSRATIONALE2 = value; IsChanged = true; }
                 NotifyPropertyChanged("MATURITYCLASSRATIONALE2");
   
             }
@@ -360,9 +326,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.CROWN_CLOSURE.Equals(value)) { _plot.CROWN_CLOSURE = value; IsChanged = true; }
-
                 NotifyPropertyChanged("CROWN_CLOSURE");
-         
             }
         }
 
@@ -371,10 +335,8 @@ namespace eLiDAR.ViewModels
             get => _plot.FIELD_CREW1;
             set
             {
-                if (!_plot.FIELD_CREW1.Equals(value)) { IsChanged = true; }
-                _plot.FIELD_CREW1 = value;
+                if (!_plot.FIELD_CREW1.Equals(value)) { _plot.FIELD_CREW1 = value; IsChanged = true; }
                 NotifyPropertyChanged("FIELD_CREW1");
-            
             }
         }
 
@@ -383,10 +345,8 @@ namespace eLiDAR.ViewModels
             get => _plot.FIELD_CREW2;
             set
             {
-                if (!_plot.FIELD_CREW2.Equals(value)) { IsChanged = true; }
-                _plot.FIELD_CREW2 = value;
+                if (!_plot.FIELD_CREW2.Equals(value)) { _plot.FIELD_CREW2 = value; IsChanged = true; }
                 NotifyPropertyChanged("FIELD_CREW2");
-                
             }
         }
         public string FIELD_CREW3
@@ -394,10 +354,8 @@ namespace eLiDAR.ViewModels
             get => _plot.FIELD_CREW3;
             set
             {
-                if (!_plot.FIELD_CREW3.Equals(value)) { IsChanged = true; }
-                _plot.FIELD_CREW3 = value;
+                if (!_plot.FIELD_CREW3.Equals(value)) { _plot.FIELD_CREW3 = value; IsChanged = true; }
                 NotifyPropertyChanged("FIELD_CREW3");
-             
             }
         }
         public string FIELD_CREW4
@@ -405,10 +363,8 @@ namespace eLiDAR.ViewModels
             get => _plot.FIELD_CREW4;
             set
             {
-                if (!_plot.FIELD_CREW4.Equals(value)) { IsChanged = true; }
-                _plot.FIELD_CREW4 = value;
+                if (!_plot.FIELD_CREW4.Equals(value)) { _plot.FIELD_CREW4 = value; IsChanged = true; }
                 NotifyPropertyChanged("FIELD_CREW4");
-            
             }
         }
         public string FIELD_CREW5
@@ -416,10 +372,8 @@ namespace eLiDAR.ViewModels
             get => _plot.FIELD_CREW5;
             set
             {
-                if (!_plot.FIELD_CREW5.Equals(value)) { IsChanged = true; }
-                _plot.FIELD_CREW5 = value;
+                if (!_plot.FIELD_CREW5.Equals(value)) { _plot.FIELD_CREW5 = value; IsChanged = true; }
                 NotifyPropertyChanged("FIELD_CREW5");
-          
             }
         }
         public string FIELD_CREW6
@@ -427,10 +381,8 @@ namespace eLiDAR.ViewModels
             get => _plot.FIELD_CREW6;
             set
             {
-                if (!_plot.FIELD_CREW6.Equals(value)) { IsChanged = true; }
-                _plot.FIELD_CREW6 = value;
+                if (!_plot.FIELD_CREW6.Equals(value)) { _plot.FIELD_CREW6 = value; IsChanged = true; }
                 NotifyPropertyChanged("FIELD_CREW6");
-         
             }
         }
         public int DECLINATION
@@ -439,9 +391,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.DECLINATION.Equals(value)) { _plot.DECLINATION = value; IsChanged = true; }
-
                 NotifyPropertyChanged("DECLINATION");
-          
             }
         }
 
@@ -451,9 +401,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.UTMZONE.Equals(value)) { _plot.UTMZONE = value; IsChanged = true; }
-
                 NotifyPropertyChanged("UTM_ZONE");
-    
             }
         }
 
@@ -463,9 +411,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.EASTING.Equals(value)) { _plot.EASTING = value; IsChanged = true; }
-
                 NotifyPropertyChanged("UTM_EASTING");
-
             }
         }
 
@@ -475,9 +421,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (!_plot.NORTHING.Equals(value)) { _plot.NORTHING = value; IsChanged = true; }
-
                 NotifyPropertyChanged("UTM_NORTHING");
-    
             }
         }
 
@@ -491,9 +435,7 @@ namespace eLiDAR.ViewModels
                     _plot.DATUM = value;
                     IsChanged = true;
                 }
-
                 NotifyPropertyChanged("DATUM");
-    
             }
         }
 
@@ -502,13 +444,8 @@ namespace eLiDAR.ViewModels
             get => _plot.PLOTOVERVIEWNOTE;
             set
             {
-                if (_plot.PLOTOVERVIEWNOTE != value) 
-                {
-                    IsChanged = true;
-                }
-                _plot.PLOTOVERVIEWNOTE = value;
+                if (_plot.PLOTOVERVIEWNOTE != value) { _plot.PLOTOVERVIEWNOTE = value; IsChanged = true; }
                 NotifyPropertyChanged("COMMENTS");
-       
             }
         }
         public DateTime FORESTHEALTHDATE
@@ -528,10 +465,8 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.FORESTHEALTHDATE.Equals(value)) { IsChanged = true; }
-                _plot.FORESTHEALTHDATE = value;
+                if (!_plot.FORESTHEALTHDATE.Equals(value)) { _plot.FORESTHEALTHDATE = value; IsChanged = true; }
                 NotifyPropertyChanged("FORESTHEALTHDATE");
-           
             }
         }
         public string FORESTHEALTHNOTE
@@ -539,13 +474,8 @@ namespace eLiDAR.ViewModels
             get => _plot.FORESTHEALTHNOTE;
             set
             {
-                if (_plot.FORESTHEALTHNOTE != value) 
-                {
-                    IsChanged = true;
-                }
-                _plot.FORESTHEALTHNOTE = value;
+                if (_plot.FORESTHEALTHNOTE != value) { _plot.FORESTHEALTHNOTE = value; IsChanged = true; }
                 NotifyPropertyChanged("FORESTHEALTHNOTE");
- 
             }
         }
         public string FORESTHEALTHPERSON
@@ -554,10 +484,7 @@ namespace eLiDAR.ViewModels
             set
             {
                 if (_plot.FORESTHEALTHPERSON != value) 
-                {
-                    IsChanged = true;
-                }
-                _plot.FORESTHEALTHPERSON = value;
+                { _plot.FORESTHEALTHPERSON = value; IsChanged = true; }
                 NotifyPropertyChanged("FORESTHEALTHPERSON");
 
             }
@@ -567,8 +494,7 @@ namespace eLiDAR.ViewModels
             get => _plot.SMALLTREESHRUBAREA;
             set
             {
-                if (!_plot.SMALLTREESHRUBAREA.Equals(value)) { IsChanged = true; }
-                _plot.SMALLTREESHRUBAREA = value;
+                if (!_plot.SMALLTREESHRUBAREA.Equals(value)) { _plot.SMALLTREESHRUBAREA = value;  IsChanged = true; }
                 NotifyPropertyChanged("SMALLTREESHRUBAREA");
             
             }
@@ -590,10 +516,8 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.SMALLTREESHRUBDATE.Equals(value)) { IsChanged = true; }
-                _plot.SMALLTREESHRUBDATE = value;
-                NotifyPropertyChanged("SMALLTREESHRUBDATE");
-              
+                if (!_plot.SMALLTREESHRUBDATE.Equals(value)) { _plot.SMALLTREESHRUBDATE = value; IsChanged = true; }
+                NotifyPropertyChanged("SMALLTREESHRUBDATE"); 
             }
         }
 
@@ -602,13 +526,8 @@ namespace eLiDAR.ViewModels
             get => _plot.SMALLTREESHRUBNOTE;
             set
             {
-                if (_plot.SMALLTREESHRUBNOTE != value) 
-                { 
-                    IsChanged = true;
-                }
-                _plot.SMALLTREESHRUBNOTE = value;
+                if (_plot.SMALLTREESHRUBNOTE != value) { _plot.SMALLTREESHRUBNOTE = value; IsChanged = true; }
                 NotifyPropertyChanged("SMALLTREESHRUBNOTE");
-
             }
         }
         public string SMALLTREEPERSON
@@ -616,10 +535,8 @@ namespace eLiDAR.ViewModels
             get => _plot.SMALLTREEPERSON;
             set
             {
-                if (_plot.SMALLTREEPERSON != value) { IsChanged = true; }
-                _plot.SMALLTREEPERSON = value;
+                if (_plot.SMALLTREEPERSON != value) { _plot.SMALLTREEPERSON = value; IsChanged = true; }
                 NotifyPropertyChanged("SMALLTREEPERSON");
-
             }
         }
         public DateTime UNDERSTORYVEGETATIONDATE
@@ -638,8 +555,7 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.UNDERSTORYVEGETATIONDATE.Equals(value)) { IsChanged = true; }
-                _plot.UNDERSTORYVEGETATIONDATE = value;
+                if (!_plot.UNDERSTORYVEGETATIONDATE.Equals(value)) { _plot.UNDERSTORYVEGETATIONDATE = value; IsChanged = true; }
                 NotifyPropertyChanged("UNDERSTORYVEGETATIONDATE");
             
             }
@@ -649,10 +565,8 @@ namespace eLiDAR.ViewModels
             get => _plot.UNDERSTORYVEGETATIONAREA;
             set
             {
-                if (!_plot.UNDERSTORYVEGETATIONAREA.Equals(value)) { IsChanged = true; }
-                _plot.UNDERSTORYVEGETATIONAREA = value;
+                if (!_plot.UNDERSTORYVEGETATIONAREA.Equals(value)) { _plot.UNDERSTORYVEGETATIONAREA = value; IsChanged = true; }
                 NotifyPropertyChanged("UNDERSTORYVEGETATIONAREA");
-       
             }
         }
 
@@ -661,10 +575,8 @@ namespace eLiDAR.ViewModels
             get => _plot.UNDERSTORYVEGETATIONNOTE;
             set
             {
-                if (_plot.UNDERSTORYVEGETATIONNOTE != value) { IsChanged = true; }
-                _plot.UNDERSTORYVEGETATIONNOTE = value;
+                if (_plot.UNDERSTORYVEGETATIONNOTE != value) { _plot.UNDERSTORYVEGETATIONNOTE = value; IsChanged = true; }
                 NotifyPropertyChanged("UNDERSTORYVEGEATIONNOTE");
-       
             }
         }
         public string UNDERSTORYVEGETATIONPERSON
@@ -672,10 +584,8 @@ namespace eLiDAR.ViewModels
             get => _plot.UNDERSTORYVEGETATIONPERSON;
             set
             {
-                if (_plot.STEMMAPPINGNOTE != value) { IsChanged = true; }
-                _plot.UNDERSTORYVEGETATIONPERSON = value;
+                if (_plot.STEMMAPPINGNOTE != value) { _plot.UNDERSTORYVEGETATIONPERSON = value; IsChanged = true; }
                 NotifyPropertyChanged("UNDERSTORYVEGETATIONPERSON");
- 
             }
         }
         public DateTime UNDERSTORYCENSUSDATE
@@ -694,10 +604,8 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.UNDERSTORYCENSUSDATE.Equals(value)) { IsChanged = true; }
-                _plot.UNDERSTORYCENSUSDATE = value;
+                if (!_plot.UNDERSTORYCENSUSDATE.Equals(value)) {_plot.UNDERSTORYCENSUSDATE = value; IsChanged = true; }
                 NotifyPropertyChanged("UNDERSTORYCENSUSDATE");
-       
             }
         }
         public string UNDERSTORYCENSUSNOTE
@@ -705,10 +613,8 @@ namespace eLiDAR.ViewModels
             get => _plot.UNDERSTORYCENSUSNOTE;
             set
             {
-                if (_plot.UNDERSTORYCENSUSNOTE != value) { IsChanged = true; }
-                _plot.UNDERSTORYCENSUSNOTE = value;
+                if (_plot.UNDERSTORYCENSUSNOTE != value) {_plot.UNDERSTORYCENSUSNOTE = value; IsChanged = true; }
                 NotifyPropertyChanged("UNDERSTORYCENSUSNOTE");
-           
             }
         }
         public string UNDERSTORYCENSUSPERSON
@@ -716,10 +622,8 @@ namespace eLiDAR.ViewModels
             get => _plot.UNDERSTORYCENSUSPERSON;
             set
             {
-                if (_plot.UNDERSTORYCENSUSPERSON != value) { IsChanged = true; }
-                _plot.UNDERSTORYCENSUSPERSON = value;
+                if (_plot.UNDERSTORYCENSUSPERSON != value) { _plot.UNDERSTORYCENSUSPERSON = value;IsChanged = true; }
                 NotifyPropertyChanged("UNDERSTORYCENSUSPERSON");
-       
             }
         }
         public DateTime DOWNWOODYDEBRISDATE
@@ -738,10 +642,8 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.DOWNWOODYDEBRISDATE.Equals(value)) { IsChanged = true; }
-                _plot.DOWNWOODYDEBRISDATE = value;
+                if (!_plot.DOWNWOODYDEBRISDATE.Equals(value)) {_plot.DOWNWOODYDEBRISDATE = value; IsChanged = true; }
                 NotifyPropertyChanged("DOWNWOODYDEBRISDATE");
-        
             }
         }
         public double LINELENGTH1
@@ -749,10 +651,8 @@ namespace eLiDAR.ViewModels
             get => _plot.LINELENGTH1;
             set
             {
-                if (!_plot.LINELENGTH1.Equals(value)) { IsChanged = true; }
-                _plot.LINELENGTH1 = value;
+                if (!_plot.LINELENGTH1.Equals(value)) {_plot.LINELENGTH1 = value; IsChanged = true; }
                 NotifyPropertyChanged("LINELENGTH1");
-           
             }
         }
         public double LINELENGTH2
@@ -760,10 +660,8 @@ namespace eLiDAR.ViewModels
             get => _plot.LINELENGTH2;
             set
             {
-                if (!_plot.LINELENGTH2.Equals(value)) { IsChanged = true; }
-                _plot.LINELENGTH2 = value;
+                if (!_plot.LINELENGTH2.Equals(value)) {_plot.LINELENGTH2 = value; IsChanged = true; }
                 NotifyPropertyChanged("LINELENGTH2");
-
             }
         }
 
@@ -772,10 +670,8 @@ namespace eLiDAR.ViewModels
             get => _plot.DOWNWOODYDEBRISNOTE;
             set
             {
-                if (_plot.DOWNWOODYDEBRISNOTE != value) { IsChanged = true; }
-                _plot.DOWNWOODYDEBRISNOTE = value;
+                if (_plot.DOWNWOODYDEBRISNOTE != value) { _plot.DOWNWOODYDEBRISNOTE = value;IsChanged = true; }
                 NotifyPropertyChanged("DOWNWOODYDEBRISNOTE");
-  
             }
         }
         public string DOWNWOODYDEBRISPERSON
@@ -783,10 +679,8 @@ namespace eLiDAR.ViewModels
             get => _plot.DOWNWOODYDEBRISPERSON;
             set
             {
-                if (_plot.DOWNWOODYDEBRISPERSON != value) { IsChanged = true; }
-                _plot.DOWNWOODYDEBRISPERSON = value;
+                if (_plot.DOWNWOODYDEBRISPERSON != value) { _plot.DOWNWOODYDEBRISPERSON = value;IsChanged = true; }
                 NotifyPropertyChanged("DOWNWOODYDEBRISPERSON");
-       
             }
         }
         public DateTime DEFORMITYDATE
@@ -805,10 +699,8 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.DEFORMITYDATE.Equals(value)) { IsChanged = true; }
-                _plot.DEFORMITYDATE = value;
+                if (!_plot.DEFORMITYDATE.Equals(value)) {_plot.DEFORMITYDATE = value; IsChanged = true; }
                 NotifyPropertyChanged("DEFORMITYDATE");
-         
             }
         }
         public string DEFORMITYNOTE
@@ -816,10 +708,8 @@ namespace eLiDAR.ViewModels
             get => _plot.DEFORMITYNOTE;
             set
             {
-                if (_plot.DEFORMITYNOTE != value) { IsChanged = true; }
-                _plot.DEFORMITYNOTE = value;
+                if (_plot.DEFORMITYNOTE != value) { _plot.DEFORMITYNOTE = value;IsChanged = true; }
                 NotifyPropertyChanged("DEFORMITYNOTE");
-             
             }
         }
         public string DEFORMITYPERSON
@@ -827,10 +717,8 @@ namespace eLiDAR.ViewModels
             get => _plot.DEFORMITYPERSON;
             set
             {
-                if (_plot.DEFORMITYPERSON != value) { IsChanged = true; }
-                _plot.DEFORMITYPERSON = value;
+                if (_plot.DEFORMITYPERSON != value) { _plot.DEFORMITYPERSON = value;IsChanged = true; }
                 NotifyPropertyChanged("DEFORMITYPERSON");
-             
             }
         }
         public DateTime STANDINFODATE
@@ -849,10 +737,8 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.STANDINFODATE.Equals(value)) { IsChanged = true; }
-                _plot.STANDINFODATE = value;
+                if (!_plot.STANDINFODATE.Equals(value)) {_plot.STANDINFODATE = value; IsChanged = true; }
                 NotifyPropertyChanged("STANDINFODATE");
-       
             }
         }
 
@@ -861,10 +747,8 @@ namespace eLiDAR.ViewModels
             get => _plot.STANDINFONOTE;
             set
             {
-                if (_plot.STANDINFONOTE != value) { IsChanged = true; }
-                _plot.STANDINFONOTE = value;
+                if (_plot.STANDINFONOTE != value) {_plot.STANDINFONOTE = value; IsChanged = true; }
                 NotifyPropertyChanged("STANDINFONOTE");
-          
             }
         }
         public string STANDINFOPERSON
@@ -872,10 +756,8 @@ namespace eLiDAR.ViewModels
             get => _plot.STANDINFOPERSON;
             set
             {
-                if (_plot.STANDINFOPERSON != value) { IsChanged = true; }
-                _plot.STANDINFOPERSON = value;
-                NotifyPropertyChanged("STANDINFOPERSON");
-                
+                if (_plot.STANDINFOPERSON != value) {_plot.STANDINFOPERSON = value; IsChanged = true; }
+                NotifyPropertyChanged("STANDINFOPERSON");   
             }
         }
         public int DISTURBANCECODE1
@@ -883,10 +765,8 @@ namespace eLiDAR.ViewModels
             get => _plot.DISTURBANCECODE1;
             set
             {
-                if (!_plot.DISTURBANCECODE1.Equals(value)) { IsChanged = true; }
-                _plot.DISTURBANCECODE1 = value;
+                if (!_plot.DISTURBANCECODE1.Equals(value)) {_plot.DISTURBANCECODE1 = value; IsChanged = true; }
                 NotifyPropertyChanged("DISTURBANCECODE1");
-        
             }
         }
         public int DISTURBANCECODE2
@@ -894,10 +774,8 @@ namespace eLiDAR.ViewModels
             get => _plot.DISTURBANCECODE2;
             set
             {
-                if (!_plot.DISTURBANCECODE2.Equals(value)) { IsChanged = true; }
-                _plot.DISTURBANCECODE2 = value;
+                if (!_plot.DISTURBANCECODE2.Equals(value)) {_plot.DISTURBANCECODE2 = value; IsChanged = true; }
                 NotifyPropertyChanged("DISTURBANCECODE2");
-
             }
         }
         public int PERCENTAFFECTED
@@ -905,10 +783,8 @@ namespace eLiDAR.ViewModels
             get => _plot.PERCENTAFFECTED;
             set
             {
-                if (!_plot.PERCENTAFFECTED.Equals(value)) { IsChanged = true; }
-                _plot.PERCENTAFFECTED = value;
+                if (!_plot.PERCENTAFFECTED.Equals(value)) {_plot.PERCENTAFFECTED = value; IsChanged = true; }
                 NotifyPropertyChanged("PERCENTAFFECTED");
-        
             }
         }
         public int PERCENTMORTALITY
@@ -916,10 +792,8 @@ namespace eLiDAR.ViewModels
             get => _plot.PERCENTMORTALITY;
             set
             {
-                if (!_plot.PERCENTMORTALITY.Equals(value)) { IsChanged = true; }
-                _plot.PERCENTMORTALITY = value;
+                if (!_plot.PERCENTMORTALITY.Equals(value)) {_plot.PERCENTMORTALITY = value; IsChanged = true; }
                 NotifyPropertyChanged("PERCENTMORTALITY");
-    
             }
         }
         public int ACCESSCONDITIONCODE
@@ -927,10 +801,8 @@ namespace eLiDAR.ViewModels
             get => _plot.ACCESSCONDITIONCODE;
             set
             {
-                if (!_plot.ACCESSCONDITIONCODE.Equals(value)) { IsChanged = true; }
-                _plot.ACCESSCONDITIONCODE = value;
+                if (!_plot.ACCESSCONDITIONCODE.Equals(value)) {_plot.ACCESSCONDITIONCODE = value; IsChanged = true; }
                 NotifyPropertyChanged("ACCESSCONDITIONCODE");
-    
             }
         }
         public DateTime AGEDATE
@@ -949,10 +821,8 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.AGEDATE.Equals(value)) { IsChanged = true; }
-                _plot.AGEDATE = value;
+                if (!_plot.AGEDATE.Equals(value)) { _plot.AGEDATE = value;IsChanged = true; }
                 NotifyPropertyChanged("AGEDATE");
-   
             }
         }
         public string AGENOTE
@@ -960,13 +830,8 @@ namespace eLiDAR.ViewModels
             get => _plot.AGENOTE;
             set
             {
-                if (_plot.AGENOTE != value) 
-                { 
-                    IsChanged = true;
-                }
-                _plot.AGENOTE = value;
+                if (_plot.AGENOTE != value) { _plot.AGENOTE = value; IsChanged = true; }
                 NotifyPropertyChanged("AGENOTE");
-
             }
         }
 
@@ -975,11 +840,7 @@ namespace eLiDAR.ViewModels
             get => _plot.AGEPERSON;
             set
             {
-                if (_plot.AGEPERSON != value)
-                {
-                    IsChanged = true;
-                }
-                _plot.AGEPERSON = value;
+                if (_plot.AGEPERSON != value) { _plot.AGEPERSON = value; IsChanged = true; }
                 NotifyPropertyChanged("AGEPERSON");
             }
         }
@@ -1000,10 +861,8 @@ namespace eLiDAR.ViewModels
             }
             set
             {
-                if (!_plot.STEMMAPPINGDATE.Equals(value)) { IsChanged = true; }
-                _plot.STEMMAPPINGDATE = value;
+                if (!_plot.STEMMAPPINGDATE.Equals(value)) {_plot.STEMMAPPINGDATE = value; IsChanged = true; }
                 NotifyPropertyChanged("STEMMAPPINGDATE");
-
             }
         }
         public string STEMMAPPINGNOTE
@@ -1011,11 +870,7 @@ namespace eLiDAR.ViewModels
             get => _plot.STEMMAPPINGNOTE;
             set
             {
-                if (_plot.STEMMAPPINGNOTE != value) 
-                { 
-                    IsChanged = true;
-                }
-                _plot.STEMMAPPINGNOTE = value;
+                if (_plot.STEMMAPPINGNOTE != value) { _plot.STEMMAPPINGNOTE = value; IsChanged = true; }
                 NotifyPropertyChanged("STEMMAPPINGNOTE");
             }
         }
@@ -1025,11 +880,7 @@ namespace eLiDAR.ViewModels
             get => _plot.STEMMAPPINGPERSON;
             set
             {
-                if (_plot.STEMMAPPINGPERSON != value)
-                {
-                    IsChanged = true;
-                }
-                _plot.STEMMAPPINGPERSON = value;
+                if (_plot.STEMMAPPINGPERSON != value) {_plot.STEMMAPPINGPERSON = value; IsChanged = true;}
                 NotifyPropertyChanged("STEMMAPPINGPERSON");
             }
         }
@@ -1040,7 +891,6 @@ namespace eLiDAR.ViewModels
             {
                 _plot.ERRORCOUNT  = value;
                 NotifyPropertyChanged("ERRORCOUNT");
-
             }
         }
         public string ERRORMSG
@@ -1050,7 +900,6 @@ namespace eLiDAR.ViewModels
             {
                 _plot.ERRORMSG = value;
                 NotifyPropertyChanged("ERRORMSG");
-
             }
         }
 

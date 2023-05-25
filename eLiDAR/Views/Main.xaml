@@ -47,7 +47,7 @@
                         HorizontalOptions="CenterAndExpand" 
                         IsVisible="True"
                         Opacity="1"
-                        Text="Developed in 2020, 2021, 2022"
+                        Text="Developed 2020 - 2023"
                         TextColor="Black"   />
                 </StackLayout>
             </ScrollView>

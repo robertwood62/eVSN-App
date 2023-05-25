@@ -36,7 +36,6 @@ namespace Fri.FieldPlotService.Api.Controllers
         /// </summary>
         /// <param name="apiKey"></param>
         /// <param name="vendorId"></param>
-        /// <param name="projectId"></param>
         /// <param name="plotList"></param>
         /// <returns></returns>
         [ProducesResponseType(200)]
@@ -44,13 +43,13 @@ namespace Fri.FieldPlotService.Api.Controllers
         [ProducesResponseType(401)]
         [HttpPost]
         [Route("plots/import")]
-        public async Task<IActionResult> ImportVsnPlotsAsync([FromHeader(Name = "api-key")] string apiKey, [FromQuery]Guid vendorId, [FromQuery]Guid projectId, [FromBody] Dictionary<string, object?>[] plotList )
+        public async Task<IActionResult> ImportVsnPlotsAsync([FromHeader(Name = "api-key")] string apiKey, [FromQuery]Guid vendorId, [FromBody] Dictionary<string, object?>[] plotList )
         {
             try
             {
                 ValidateApiKey(apiKey);
 
-                await projectManager.ImportPlotsAsync(projectId, vendorId, plotList);
+                await projectManager.ImportPlotsAsync(vendorId, plotList);
                 return Ok();
             }
             catch (Exception ex)

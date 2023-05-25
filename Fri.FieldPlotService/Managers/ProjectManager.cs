@@ -443,6 +443,8 @@ namespace Fri.FieldPlotService.Managers
         /// <returns></returns>
         public async Task ImportPlotsAsync(Guid projectId, Guid vendorId, List<ImportPlotData> plotList)
         {
+            var project = await GetProjectAsync(projectId);
+
             var dataItems = new List<Dictionary<string, object?>>();
             if (plotList != null)
             {
@@ -453,62 +455,44 @@ namespace Fri.FieldPlotService.Managers
                         { Constants.VsnPlotName, plot.PlotName },
                         { Constants.VsnMeasureTypeCode, plot.PlotTypeCode },
                         { Constants.VsnMeasureYear, plot.MeasureYear },
+                        { Constants.VsnProjectId, project.GetString(Constants.VsnProjectId) },
+                        { Constants.VsnUtmZone, plot.UtmZone },
+                        { Constants.VsnEasting, plot.Easting },
+                        { Constants.VsnNorthing, plot.Northing },
+                        { Constants.VsnCreated, DateTime.UtcNow },
+                        { Constants.VsnIsDeleted, Constants.VsnActiveFlag },
+                        { Constants.VsnLastModified, DateTime.UtcNow }
                     });
                 }
             }
 
-            await ImportPlotsAsync(projectId, vendorId, dataItems.ToArray());
+            await ImportPlotsAsync(vendorId, dataItems.ToArray());
         }
 
 
         /// <summary>
         /// Import a list of VSN plot names into the system for vendors to 
         /// </summary>
-        /// <param name="projectId"></param>
         /// <param name="vendorId"></param>
         /// <param name="plotList"></param>
         /// <returns></returns>
-        public async Task ImportPlotsAsync(Guid projectId, Guid vendorId, Dictionary<string, object?>[]? plotList)
+        public async Task ImportPlotsAsync(Guid vendorId, Dictionary<string, object?>[]? plotList)
         {
             if (plotList == null || plotList.Length == 0)
             {
                 return;
             }
 
-            // Ensure the project exists, which also indicates the vendor exists.
-            var project = await GetProjectAsync(projectId);
-
-            // Get the list of 'active' VNS plots in the system (all of them)
-            var existingVsnPlots = await dbManager.QueryAsync<Plot>(
-                $"select * from Plot p where p.deleted = null and p.Data.{Constants.VsnIsDeleted} = '{Constants.VsnActiveFlag}'",
-                null, null, DbManager.GetContainerName<Plot>());
-
             // Iterate through the plots to create.
             foreach (var plotData in plotList)
             {
-                // Check if the plot currently exists.
-                var plotName = plotData[Constants.VsnPlotName]?.ToString();
-                int.TryParse(plotData[Constants.VsnMeasureYear]?.ToString(), null, out int measureYear);
-                var measureTypeCode = plotData[Constants.VsnMeasureTypeCode]?.ToString();
-
-                var existingPlot = await GetPlotAsync(vendorId, plotName, measureYear, measureTypeCode);
-
-                // If it doesn't exist, create it.
-                if (existingPlot == null)
+                var plot = new Plot
                 {
-                    var plot = new Plot
-                    {
-                        VendorId = vendorId,
-                        Id = Guid.NewGuid(),
-                        Data = plotData
-                    };
-                    await dbManager.CreateAsync(plot);
-                }
-                else
-                {
-                    existingPlot.Data = plotData;
-                    await dbManager.UpdateAsync(existingPlot);
-                }
+                    VendorId = vendorId,
+                    Id = Guid.NewGuid(),
+                    Data = plotData,
+                };
+                await dbManager.CreateAsync(plot);
             }
 
         }

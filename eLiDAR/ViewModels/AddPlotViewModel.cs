@@ -156,6 +156,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedSpecies, value);
                 _plot.LEAD_SPP = (int)_selectedSpecies.ID;
+                IsChanged = true;
             }
         }
         private PickerItems _selectedNonStandardType = new PickerItems { ID = 0, NAME = "" };
@@ -170,6 +171,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedNonStandardType, value);
                 _plot.NONSTANDARDTYPECODE = (int)_selectedNonStandardType.ID;
+                IsChanged = true;
             }
         }
         private PickerItems _selectedAccessCondition = new PickerItems { ID = 0, NAME = "" };
@@ -184,6 +186,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedAccessCondition, value);
                 _plot.ACCESSCONDITIONCODE  = (int)_selectedAccessCondition.ID;
+                IsChanged = true;
             }
         }
 
@@ -210,6 +213,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedCrew1, value);
                 _plot.FIELD_CREW1 = _selectedCrew1.ID;
+                IsChanged = true;
             }
         }
 
@@ -299,6 +303,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedForestHealthPerson, value);
                 _plot.FORESTHEALTHPERSON = _selectedForestHealthPerson.ID;
+                IsChanged = true;
             }
         }
 
@@ -314,6 +319,7 @@ namespace eLiDAR.ViewModels {
         {
             SetProperty(ref _selectedMeasurementType, value);
             _plot.MEASURETYPECODE = _selectedMeasurementType.ID;
+                IsChanged = true;
         }
         }
         private PickerItems _selectedGrowthPlot = new PickerItems { ID = 0, NAME = "" };
@@ -328,6 +334,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedGrowthPlot, value);
                 _plot.GROWTHPLOTNUMBER = (int)_selectedGrowthPlot.ID;
+                IsChanged = true;
             }
         }
         private PickerItemsString _selectedGrowthPlotType = new PickerItemsString { ID = "", NAME = "" };
@@ -342,6 +349,7 @@ namespace eLiDAR.ViewModels {
             {
                 SetProperty(ref _selectedGrowthPlotType, value);
                 _plot.EXISTINGPLOTTYPECODE = _selectedGrowthPlotType.ID;
+                IsChanged = true;
             }
         }
         async Task ShowList(){ 
