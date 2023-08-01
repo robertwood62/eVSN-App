@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using eLiDAR;
 using eLiDAR.Utilities;
+using System.IO;
 
 namespace eLiDAR.Helpers
 {
@@ -27,6 +28,13 @@ namespace eLiDAR.Helpers
             {
                 sqliteconnection = DependencyService.Get<ISQLite>().GetConnection(databaseName);
             }
+        }
+
+        public bool ExportSQLite()
+        {
+            var databaseName = GetDatabaseName();
+
+            return DependencyService.Get<ISQLite>().Export(databaseName);
         }
 
         public static void DetachDatabase()

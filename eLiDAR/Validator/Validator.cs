@@ -565,7 +565,7 @@ namespace eLiDAR.Validator
                 RuleFor(c => c.DBH).GreaterThanOrEqualTo((float)7.10).WithMessage("Tree DBH should be >= 7.10cm.");
                 RuleFor(c => c.DBH).LessThanOrEqualTo((float)150.00).WithMessage("Tree DBH should be <= 150.00cm");
 
-                RuleFor(c => (decimal)c.DBH).PrecisionScale(2, 6, false).WithMessage("DBH can have up to 2 decimals");
+                RuleFor(c => (decimal)c.DBH).PrecisionScale(6, 2, false).WithMessage("DBH can have up to 2 decimals");
 
                 RuleFor(c => c).Must(c => c.SPECIESCODE == 0).WithMessage("Species code should be empty when tree status = C, X.").When(c => c.TREESTATUSCODE.Contains("C") || c.TREESTATUSCODE.Contains("X"));
                 RuleFor(c => c).Must(c => c.TREEORIGINCODE == null).WithMessage("Tree Origin Code should be null when tree status = C, X.").When(c => c.TREESTATUSCODE.Contains("C") || c.TREESTATUSCODE.Contains("X"));
@@ -1015,11 +1015,11 @@ namespace eLiDAR.Validator
             RuleFor(c => c).Must(c => c.ELCLAYER6 >= 0 && c.ELCLAYER6 <= 99).WithMessage("% cover for ELC layer 6 must be <= 99%");
             RuleFor(c => c).Must(c => c.ELCLAYER7 >= 0 && c.ELCLAYER7 <= 99).WithMessage("% cover for ELC layer 7 must be <= 99%");
 
-            RuleFor(c => (decimal)c.ELCLAYER3).PrecisionScale(1, 4, false).WithMessage("ELClayer3 can have up to 1 decimals");
-            RuleFor(c => (decimal)c.ELCLAYER4).PrecisionScale(1, 4, false).WithMessage("ELClayer4 can have up to 1 decimals");
-            RuleFor(c => (decimal)c.ELCLAYER5).PrecisionScale(1, 4, false).WithMessage("ELClayer5 can have up to 1 decimals");
-            RuleFor(c => (decimal)c.ELCLAYER6).PrecisionScale(1, 4, false).WithMessage("ELClayer6 can have up to 1 decimals");
-            RuleFor(c => (decimal)c.ELCLAYER7).PrecisionScale(1, 4, false).WithMessage("ELClayer7 can have up to 1 decimals");
+            RuleFor(c => (decimal)c.ELCLAYER3).PrecisionScale(4, 1, false).WithMessage("ELClayer3 can have up to 1 decimals");
+            RuleFor(c => (decimal)c.ELCLAYER4).PrecisionScale(4, 1, false).WithMessage("ELClayer4 can have up to 1 decimals");
+            RuleFor(c => (decimal)c.ELCLAYER5).PrecisionScale(4, 1, false).WithMessage("ELClayer5 can have up to 1 decimals");
+            RuleFor(c => (decimal)c.ELCLAYER6).PrecisionScale(4, 1, false).WithMessage("ELClayer6 can have up to 1 decimals");
+            RuleFor(c => (decimal)c.ELCLAYER7).PrecisionScale(4, 1, false).WithMessage("ELClayer7 can have up to 1 decimals");
 
             if (DoFullValidation)
             {

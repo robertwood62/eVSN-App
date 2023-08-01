@@ -63,9 +63,11 @@ namespace eLiDAR.API
             new EnvironmentConfig("Development", "https://dev-fri-partners-api.azurewebsites.net/", true),
             new EnvironmentConfig("Local", "https://localhost:7133/"),
             new EnvironmentConfig("Production", "https://beta-fri-partners-api.azurewebsites.net/"),
+            new EnvironmentConfig("IST", "https://dev.partner.fri.mnrf.gov.on.ca/api/", false),
 #else
-            new EnvironmentConfig("Production", "https://beta-fri-partners-api.azurewebsites.net/", true),
+            new EnvironmentConfig("Production", "https://beta-fri-partners-api.azurewebsites.net/", false),
             new EnvironmentConfig("Development", "https://dev-fri-partners-api.azurewebsites.net/", false),
+            new EnvironmentConfig("IST", "https://dev.partner.fri.mnrf.gov.on.ca/api/", true),
 #endif
             new EnvironmentConfig(CustomEnvironmentName, null)
         };

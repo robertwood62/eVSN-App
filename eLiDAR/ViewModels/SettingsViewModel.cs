@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using eLiDAR.Domain.Global;
 using eLiDAR.Helpers;
 using eLiDAR.Models;
-using Xamarin.Forms;
-using eLiDAR.Utilities;
-using System.Windows.Input;
-using eLiDAR.API;
-using System.Threading.Tasks;
 using eLiDAR.Styles;
-using eLiDAR.Domain.Global;
+using eLiDAR.Utilities;
 using eLiDAR.Views;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace eLiDAR.ViewModels
 {
-    public class SettingsViewModel : INotifyPropertyChanged   {
 
+    public class SettingsViewModel : INotifyPropertyChanged   {
         public INavigation _navigation;
         private Utils util;
         private SETTINGS settings;
@@ -29,6 +28,8 @@ namespace eLiDAR.ViewModels
         public ICommand ChangeThemeCommand { get; set; }
         public List<PickerItemsString> ListPlots { get; set; }
         public string SelectedTheme { get; set; }
+        public ICommand DownloadSQLiteCommand { get; private set; }
+
         public SettingsViewModel(INavigation navigation)
         {
             _navigation = navigation;
@@ -36,8 +37,11 @@ namespace eLiDAR.ViewModels
     //        SynchCommand = new Command(async () => await Synchrun());
     //        SynchPlotCommand = new Command(async () => await SynchPlotrun());
             DefaultCommand = new Command(async () => await DoDefault());
+
             //_synchmanager = new SynchManager();
             databasehelper = new DatabaseHelper();
+            DownloadSQLiteCommand = new Command(async () => await DownloadSQLiteDatabase());
+
             ListPlots = Services.PickerService.FillPlotPicker(databasehelper.GetAllPlotData()).ToList().OrderBy(c => c.NAME).ToList();
             ChangeThemeCommand = new Command((x) =>
             {
@@ -415,6 +419,23 @@ namespace eLiDAR.ViewModels
                 NotifyPropertyChanged("TREE_ROWS_PULLED");
             }
         }
+        private async Task DownloadSQLiteDatabase()
+        {
+
+            databasehelper = new DatabaseHelper();
+            // Check if the file exists
+            if (databasehelper.ExportSQLite())
+            {
+                await Application.Current.MainPage.DisplayAlert("Success", "The database file was downloaded.", "OK");
+            }
+
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert(" Error", "The database file could not be saved.", "OK");
+            }
+
+        }
+
         #region INotifyPropertyChanged    
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = ""){

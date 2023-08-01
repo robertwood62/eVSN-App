@@ -199,7 +199,7 @@
                     x:Name="txtOldFeedingCavity"
                     Title="Old Feeding Cavity"
                     HorizontalOptions="FillAndExpand"
-                    SelectedItem="{Binding OLD_FEEDNG_CAVITY, Mode=TwoWay}"
+                    SelectedItem="{Binding OLD_FEEDING_CAVITY, Mode=TwoWay}"
                     Style="{DynamicResource TextSubheadPicker}"
                     TitleColor="{StaticResource AccentColor}">
                     <Picker.Items>
@@ -215,7 +215,7 @@
                     x:Name="txtNewFeedingCavity"
                     Title="New Feeding Cavity"
                     HorizontalOptions="FillAndExpand"
-                    SelectedItem="{Binding NEW_FEEDNG_CAVITY, Mode=TwoWay}"
+                    SelectedItem="{Binding NEW_FEEDING_CAVITY, Mode=TwoWay}"
                     Style="{DynamicResource TextSubheadPicker}"
                     TitleColor="{StaticResource AccentColor}">
                     <Picker.Items>

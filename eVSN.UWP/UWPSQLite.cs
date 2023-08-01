@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 using eLiDAR.Helpers;
 using eLiDAR.UWP;
 using Nito.AsyncEx;
-using SQLite;  
+using SQLite;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;  
 using Xamarin.Forms;
+
 
 [assembly: Dependency(typeof(SqlConnection))]  
   
@@ -47,6 +49,74 @@ namespace eLiDAR.UWP
                 return null; 
             }
         }
+        private bool isOperationCompleted;
+        private string destFilePath;
+
+        public bool Export(string databaseName)
+        {
+            try
+            {
+                string documentsPath = ApplicationData.Current.LocalFolder.Path;
+                string dbPath = Path.Combine(documentsPath, databaseName);
+
+                var fileCopyName = $"Database_{DateTime.Now:dd-MM-yyyy_HH-mm-ss-tt}.db";
+                destFilePath = Path.Combine(documentsPath, fileCopyName);
+
+                // Copy the file to the destination path
+                File.Copy(dbPath, destFilePath);
+
+                // Share the file using the Windows Community Toolkit
+                var fileToShare = StorageFile.GetFileFromPathAsync(destFilePath).AsTask().Result;
+                if (fileToShare != null)
+                {
+                    var dataTransferManager = DataTransferManager.GetForCurrentView();
+                    dataTransferManager.DataRequested += OnDataRequested;
+
+                    DataTransferManager.ShowShareUI();
+
+                    // Wait for the sharing operation to complete before returning
+                    //isOperationCompleted = false;
+                    //while (!isOperationCompleted)
+                    //{
+                    //    Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.ProcessEvents(
+                    //        Windows.UI.Core.CoreProcessEventsOption.ProcessAllIfPresent);
+                    //}
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private void OnDataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+        {
+            var request = args.Request;
+            request.Data.Properties.Title = "Share Database File";
+
+            var deferral = request.GetDeferral();
+
+            try
+            {
+                var fileToShare = StorageFile.GetFileFromPathAsync(destFilePath).AsTask().Result;
+                if (fileToShare != null)
+                {
+                    request.Data.SetStorageItems(new[] { fileToShare });
+                }
+            }
+            finally
+            {
+                deferral.Complete();
+                isOperationCompleted = true;
+            }
+        }
+
 
         async Task<bool> CheckFile()
         {

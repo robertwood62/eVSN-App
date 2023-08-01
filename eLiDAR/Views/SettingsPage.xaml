@@ -224,6 +224,8 @@
                             IsToggled="{Binding UseDarkMode}"
                             VerticalOptions="Center" />
                    </StackLayout>
+                   <Button Text="Download SQLite Database" Style="{DynamicResource FormButtonStyle}" Command="{Binding DownloadSQLiteCommand}"/>
+
                 </StackLayout>
          <!--   <StackLayout Margin="10">
                 <BoxView Style="{DynamicResource HRule}" />

@@ -11,7 +11,7 @@ using UIKit;
 
 [assembly: Xamarin.Forms.Dependency(typeof(IOSSQLite))]
 namespace elidar.iOS
-{
+{   
     public class IOSSQLite : ISQLite
     {
         public SQLiteConnection GetConnection(string databaseName)
@@ -29,8 +29,36 @@ namespace elidar.iOS
 
             return new SQLiteConnection(dbPath);
         }
+        public bool Export(string databaseName)
+        {
+            try
+            {
+                string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                string libFolder = Path.Combine(docFolder, "..", "Library", "Databases");
+                string dbPath = Path.Combine(libFolder, databaseName);
 
+                var bytes = File.ReadAllBytes(dbPath);
 
+                var fileCopyName = Path.Combine(docFolder, string.Format("Database_{0:dd-MM-yyyy_HH-mm-ss-tt}.db", DateTime.Now));
+                File.WriteAllBytes(fileCopyName, bytes);
+
+                // Share the file using the iOS sharing mechanism
+                var fileUrl = NSUrl.FromFilename(fileCopyName);
+                var activityItems = new NSObject[] { fileUrl };
+                var activityController = new UIActivityViewController(activityItems, null);
+                var viewController = UIApplication.SharedApplication.KeyWindow.RootViewController;
+                viewController.PresentViewController(activityController, true, null);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
+        public string GetPath(string databaseName)
+        {
+            return FileAccessHelper.GetLocalFilePath(databaseName);
+        }
         public class FileAccessHelper
         {
             public static string GetLocalFilePath(string filename)
@@ -50,6 +78,7 @@ namespace elidar.iOS
                 return dbPath;
             }
 
+
             private static void CopyDatabaseIfNotExists(string dbPath)
             {
                 bool debug = false;
@@ -63,7 +92,8 @@ namespace elidar.iOS
                     File.Copy(existingDb, dbPath);
                 }
             }
-
         }
+
+
     }
 }

@@ -1,12 +1,16 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
+using Android.Content;
 using eLiDAR;
 using eLiDAR.Droid;
 using eLiDAR.Helpers;
 using SQLite;
+using Xamarin.Essentials;
 
 [assembly: Xamarin.Forms.Dependency(typeof(AndroidSQLite))]
 namespace eLiDAR.Droid {
+
     public class AndroidSQLite : ISQLite {
         public SQLiteConnection GetConnection(string databaseName) 
         {
@@ -35,6 +39,29 @@ namespace eLiDAR.Droid {
             return new SQLiteConnection(path);
 		}
 
-   
+        public bool Export(string databaseName)
+        {
+            try {
+                string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                string dbPath = Path.Combine(documentsPath, databaseName);
+
+                var fileCopyName = $"Database_{DateTime.Now:dd-MM-yyyy_HH-mm-ss-tt}.db";
+                var destFilePath = Path.Combine(documentsPath, fileCopyName);
+
+                // Copy the file to the destination path
+                File.Copy(dbPath, destFilePath);
+
+                // Use Xamarin.Essentials.Share to share the file
+                Share.RequestAsync(new ShareFileRequest
+                {
+                    Title = "Share Database File",
+                    File = new ShareFile(destFilePath, "application/octet-stream")
+                });
+            } catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -32,6 +32,7 @@ namespace eLiDAR.ViewModels {
                 _plotRepository = new PlotRepository();
                 Utils util = new Utils();
                 // DO DEFAULTS
+                if (_plot.STEMMAPPINGDATE == System.DateTime.MinValue) { _plot.STEMMAPPINGDATE = System.DateTime.Now; }
                 if (_plot.SMALLTREESHRUBDATE == System.DateTime.MinValue) { _plot.SMALLTREESHRUBDATE = System.DateTime.Now; }
                 if (_plot.DEFORMITYDATE == System.DateTime.MinValue) { _plot.DEFORMITYDATE = System.DateTime.Now; }
                 if (_plot.DOWNWOODYDEBRISDATE == System.DateTime.MinValue) { _plot.DOWNWOODYDEBRISDATE = System.DateTime.Now; }
